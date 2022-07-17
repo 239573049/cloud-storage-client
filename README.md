@@ -12,3 +12,6 @@
 
 ## 软件运行图
 
+![输入图片说明](src/imgs/android-home.png)
+
+![输入图片说明](src/imgs/android-cloud.png)
