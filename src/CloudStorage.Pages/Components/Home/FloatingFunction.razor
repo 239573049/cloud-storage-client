@@ -1,0 +1,41 @@
+﻿@using CloudStorage.Pages.Components.DirectoryPreview
+@using Microsoft.AspNetCore.Components.Forms
+
+<MDialog @bind-Value="IsShow"
+         Width="500" >
+    <ChildContent>
+        <div class="content">
+
+            <div class="add-to-file">添加至文件</div>
+            <div class="functions">
+                <div class="m-item-group m-bottom-navigation bottom-list">
+                    <MButton Value="@("recent")" OnClick="OnFileAsync">
+                        <span>本地文件</span>
+                        <MAvatar Tile Size=30>
+                            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/file-uploading.png" Alt="Jack"></MImage>
+                        </MAvatar>
+                    </MButton>
+                    <MButton Value="@("favorites")">
+                        <span>图片视频</span>
+                        <MAvatar Tile Size=30>
+                            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/video.png" Alt="Jack"></MImage>
+                        </MAvatar>
+
+                    </MButton>
+
+                    <MButton Value="@("nearby")">
+                        <span>新建文件夹</span>
+                        <MAvatar Tile Size=30>
+                            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/folder.png" Alt="Jack"></MImage>
+                        </MAvatar>
+
+                    </MButton>
+                </div>
+
+            </div>
+        </div>
+    </ChildContent>
+</MDialog>
+<FileInput BrowserFiles="OnFileClick" />
+
+<DirectoryPreview ActionDialog="(value)=>ShowDirectoryPreview=value" Dialog=ShowDirectoryPreview DirectoryPreviewInput="SelectFolder" />

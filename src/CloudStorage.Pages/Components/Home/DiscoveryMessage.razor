@@ -1,0 +1,31 @@
+﻿<div class="discover-body">
+    @foreach (var t in newestStorages)
+    {
+        <MCol Cols=12>
+            <MCard Class="discover-message">
+                <MCardText Class="text-h8">@t.Title</MCardText>
+                <MCardText Class="text-h6">@t.Message</MCardText>
+                <MCardSubtitle>
+                    <span>
+                        <MAvatar Size=45 Tile>
+                            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/zip.png"></MImage>
+                        </MAvatar>
+                    </span>
+                    <span>
+                        @t.FileName
+                    </span>
+                    <span>
+                        查看
+                    </span>
+                </MCardSubtitle>
+            </MCard>
+        </MCol>
+    }
+</div>
+
+<style>
+    .discover-message {
+        border-radius: 18px;
+        user-select: none;
+    }
+</style>

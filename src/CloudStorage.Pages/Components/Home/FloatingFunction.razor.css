@@ -1,0 +1,18 @@
+﻿.add-to-file {
+    height: 40px;
+    padding: 10px 10px 0px 10px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+.functions {
+    height: 80px;
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+}
+
+.bottom-list {
+    box-shadow:none !important;
+}
+.content {
+    background-color: #ffffff;
+}

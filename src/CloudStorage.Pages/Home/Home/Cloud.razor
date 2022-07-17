@@ -1,0 +1,9 @@
+﻿@using CloudStorage.Pages.Components.Home
+
+<CloudList StorageClickAction="(value)=>StorageClickAction?.Invoke(value)" Input="Input" GetStorageListAction="(value)=>
+{
+    Input=value;
+    GetStorageListAction?.Invoke(value);
+}">
+
+</CloudList>

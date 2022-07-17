@@ -1,0 +1,33 @@
+﻿@using CloudStorage.Domain
+@using CloudStorage.Pages.Layou
+@using System.ComponentModel.DataAnnotations
+
+@page "/"
+
+@inherits EmptyLayou
+
+<div class="login">
+    <div class="login-top"></div>
+    <div class="login-title">用户登录</div>
+    <div class="login-form">
+
+        <MForm @bind-Value="_valid" Model="_model" EnableValidation @ref="_form">
+            <MTextField @bind-Value="_model.Account"
+                        Counter="10"
+                        Label="账号："
+                        required></MTextField>
+
+            <MTextField @bind-Value="_model.Password"
+                        AppendIcon="@(PasswordShow ? "mdi-eye" : "mdi-eye-off")"
+                        Type="@(PasswordShow ? "text" : "password")"
+                        Label="密码："
+                        Counter="true"
+                        OnAppendClick="() => PasswordShow = !PasswordShow"></MTextField>
+
+            <MButton Disabled="!_valid" Color="success" Style="width: 90%;margin: 5%;height: 50px;" Class="mr-4 " OnClick="ValidateAsync">登录</MButton>
+            <div class="login-register">
+                <a href="/register">还没有账号？点击注册</a>
+            </div>
+        </MForm>
+    </div>
+</div>

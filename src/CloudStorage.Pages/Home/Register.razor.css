@@ -1,0 +1,31 @@
+﻿.register {
+    height: 100%;
+    width: 100%;
+    background: url('/img/login.jpg')
+}
+
+.register-top {
+    height: 10%;
+}
+
+.register-title {
+    font-size: 25px;
+    -moz-user-select: none;
+    user-select: none;
+    color: #ffffff;
+    text-align: center;
+}
+
+.register-form {
+    margin-top: 15%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.register-register {
+    text-align: right;
+    margin-right: 20px;
+    text-decoration: underline;
+    -moz-user-select: none;
+    user-select: none;
+}

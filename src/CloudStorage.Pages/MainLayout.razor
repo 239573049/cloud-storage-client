@@ -1,0 +1,25 @@
+﻿@using CloudStorage.Applications.Services
+@inherits LayoutComponentBase
+
+<MApp>
+    @Body
+    <MErrorHandler OnErrorHandleAsync="ErrorHandleAsync">
+    </MErrorHandler>
+</MApp>
+@code {
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        await  base.SetParametersAsync(parameters);
+    }
+    [Inject] public LoginService loginService { get; set; }
+
+    private async Task ErrorHandleAsync(Exception exception)
+    {
+        if (exception.Message == "账号未授权")
+        {
+            await loginService.RemoveTokenAsync();
+        }
+    }
+
+}

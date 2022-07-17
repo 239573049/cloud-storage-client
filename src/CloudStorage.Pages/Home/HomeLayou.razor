@@ -1,0 +1,70 @@
+﻿@using BlazorComponent
+@using CloudStorage.Domain.Shared
+@using CloudStorage.Pages.Components.Home
+@using CloudStorage.Pages.Home.Home
+@using CloudStorage.Pages.Layou
+
+@page "/home"
+<div>
+    <MAppBar Color="deep-purple accent-4"
+             Dense
+             Dark>
+        @if (Menu)
+        {
+            <MButton icon OnClick="()=>OnReturnPrevious()">
+                <MIcon>mdi-arrow-left</MIcon>
+            </MButton>
+
+        }
+
+        <MSpacer></MSpacer>
+
+        <MButton icon>
+            <MIcon>mdi-magnify</MIcon>
+        </MButton>
+
+        <MMenu Left
+               Bottom>
+            <ActivatorContent>
+                <MButton Icon @attributes="@context.Attrs">
+                    <MIcon>mdi-dots-vertical</MIcon>
+                </MButton>
+            </ActivatorContent>
+            <ChildContent>
+            </ChildContent>
+        </MMenu>
+    </MAppBar>
+</div>
+<div class="body">
+    <div class="@(Component == nameof(Discovery)?"componet-show":"componet")">
+        <Discovery />
+    </div>
+    <div class="@(Component == nameof(Album)?"componet-show":"componet")">
+        <Album />
+    </div>
+    <div class="@(Component == nameof(Cloud)?"componet-show":"componet")">
+        <Cloud StorageClickAction="OnDiscoveryStorage" Input="Input" GetStorageListAction="OnGetStorageList" />
+    </div>
+    <div class="@(Component == nameof(MyInfo)?"componet-show":"componet")">
+        <MyInfo />
+    </div>
+    <div class="@(Component == nameof(Video)?"componet-show":"componet")">
+        <Video />
+    </div>
+    <div class="floating-window" @onclick="@OnFloatingWindowClick">
+        <MAvatar Size=38 Tile>
+            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/add.png"></MImage>
+        </MAvatar>
+    </div>
+</div>
+<FloatingFunction IsShow="@FloatingShow" FloatingShow="OnFloatingShow" />
+<Navigations OnClick="(name)=>SetComponent(name)" />
+<style>
+    .componet {
+        display: none;
+    }
+
+    .componet-show {
+        transition: 0.5s;
+    }
+</style>

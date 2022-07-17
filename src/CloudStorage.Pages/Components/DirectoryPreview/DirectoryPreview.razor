@@ -1,0 +1,73 @@
+﻿@using BlazorComponent
+@using CloudStorage.Domain.Shared
+
+<MDialog @bind-Value="Dialog"
+         Fullscreen
+         Transition="dialog-bottom-transition">
+    <ChildContent>
+        <MCard>
+            <MToolbar Dark
+                      Color="primary">
+                <MButton Icon
+                         Dark
+                         OnClick="() => Dialog = false">
+                    <MIcon>mdi-close</MIcon>
+                </MButton>
+                <MSpacer></MSpacer>
+                <MToolbarTitle>@Title</MToolbarTitle>
+            </MToolbar>
+            <MList Rounded Class="list-directory">
+                <MListItemGroup Color="primary">
+                    @foreach (var item in StorageList.Items)
+                    {
+                        <MListItem Disabled="@(item.Type==StorageType.File)" OnClick="()=>OnStorageClick(item)">
+                            <MListItemIcon>
+                                <MAvatar Size=15 Tile>
+                                    <MImage Src="@(FileNameSuffix.Img.Any(x=>item.Path.EndsWith(x))?item.CloudUrl:item.Icon)"></MImage>
+                                </MAvatar>
+                            </MListItemIcon>
+                            <MListItemContent>
+                                <MListItemTitle>@item.Path</MListItemTitle>
+                            </MListItemContent>
+                        </MListItem>
+                    }
+                </MListItemGroup>
+            </MList>
+            <MCard Class="bottom-of-menu">
+                <div>
+                    <span>
+                        <MButton Elevation="2" Color="primary" Style="float:left;">新建文件夹</MButton>
+                    </span>
+                    <span>
+                        <MButton Elevation="2" Color="primary" Style="float:right;" OnClick="SelectCurrentFolder">选择当前目录</MButton>
+                    </span>
+                </div>
+            </MCard>
+        </MCard>
+    </ChildContent>
+</MDialog>
+<style>
+    .bottom-of-menu {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        position: absolute;
+        bottom: 5px;
+    }
+
+    .list-directory {
+        border: 1px solid #000000;
+        left: 0;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        flex: 1;
+        max-height: calc(100vh - 100px);
+    }
+
+        .list-directory::-webkit-scrollbar {
+        width: 0 !important;
+    }
+
+</style>

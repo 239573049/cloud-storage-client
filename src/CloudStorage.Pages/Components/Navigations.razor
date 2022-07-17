@@ -1,0 +1,8 @@
+﻿<MCard>
+    <MTabs BackgroundColor="deep-purple accent-4" CenterActive Dark>
+        @foreach (var t in navigationsTabs)
+        {
+            <MTab OnClick="()=>OnClick?.Invoke(t.Name)">@t.Title</MTab>
+        }
+    </MTabs>
+</MCard>

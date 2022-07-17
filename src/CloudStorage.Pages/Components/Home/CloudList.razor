@@ -1,0 +1,30 @@
+﻿@using CloudStorage.Domain
+@using CloudStorage.Domain.Shared
+
+<div class="cloud-list">
+    @if (StorageList?.Items != null)
+    {
+        @foreach (var c in StorageList.Items)
+        {
+            <div class="cloud-list-cart" @onclick="()=> SetStorageId(c)">
+                <div>
+                    <MAvatar Size=40 Tile>
+                        <MImage Src="@(FileNameSuffix.Img.Any(x=>c.Path?.EndsWith(x)==true)?c.CloudUrl:c.Icon)"></MImage>
+                    </MAvatar>
+                </div>
+                <div>
+                    <div class="cloud-list-path">@c.Path</div>
+                    <div class="cloud-list-date">@c.CreationTime</div>
+
+                    <MChip Class="ma-6"
+                   XSmall
+                   Color="deep-purple accent-4 cloud-list-menu "
+                   Outlined>
+                        ···
+                    </MChip>
+                </div>
+            </div>
+        }
+
+    }
+</div>

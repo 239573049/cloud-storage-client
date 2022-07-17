@@ -1,0 +1,23 @@
+﻿.cloud-list {
+    margin-left: 18px;
+    margin-right: 18px;
+}
+
+.cloud-list-path {
+    font-size: 11px;
+    overflow: hidden;
+    height:16.5px;
+}
+
+.cloud-list-date{
+    font-size:8px;
+}
+
+.cloud-list-cart {
+    float: left;
+    width: 80px;
+    text-align: center;
+}
+.cloud-list-menu {
+    margin: 2px !important;
+}
