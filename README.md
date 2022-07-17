@@ -1,6 +1,4 @@
-# cloud-storage-client
-
-#### 介绍
+## 介绍
 云盘系统客户端
 使用MAUI实现跨平台客户端
 目前还在维护中
@@ -12,6 +10,7 @@
 
 ## 软件运行图
 
-![输入图片说明](src/imgs/android-home.png)
+![Android图](src/imgs/android-home.png)
 
-![输入图片说明](src/imgs/android-cloud.png)
+![Android图](src/imgs/android-cloud.png)
+
