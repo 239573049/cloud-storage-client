@@ -1,0 +1,13 @@
+﻿@using CloudStorage.Layou.Components
+@inherits LayoutComponentBase
+
+<MApp>
+
+    <div class="main">
+        <MenuList MenuShow=MenuShow OnClick="(v)=>OnClick()" />
+        <div class="@(MenuShow?"body":"body-lessen")">
+            @Body
+        </div>
+    </div>
+</MApp>
+

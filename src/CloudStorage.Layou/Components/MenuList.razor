@@ -1,0 +1,31 @@
+﻿@using CloudStorage.Layou.Pages
+
+<div class="@(MenuShow?"menu":"menu-lessen")">
+    <Menus OnClick=OnClick Icon="@(MenuShow?"mdi-chevron-left":"mdi-chevron-right")" Text="@(MenuShow?"收起":"")"  />
+    <Menus OnClick="(v)=>OnHerf(string.Empty)" Icon="mdi-egg-easter" Text="发现" Class="@(string.Empty==DefaultHerf?"menu-click":"menu-not-click")" />
+    <Menus OnClick="(v)=>OnHerf(nameof(Storages))" Icon="mdi-nas" Text="云盘" Class="@(nameof(Storages)==DefaultHerf?"menu-click":"menu-not-click")" />
+    <Menus OnClick="(v)=>OnHerf(nameof(PersonalCenter))" Icon="mdi-owl" Text="个人中心" Class="@(nameof(PersonalCenter)==DefaultHerf?"menu-click":"menu-not-click")" />
+</div>
+
+
+@code {
+    [Parameter]
+    public bool MenuShow { get; set; } = true;
+
+    [Parameter]
+    public Action<MouseEventArgs>? OnClick { get; set; }
+
+    [Inject]
+    public NavigationManager? navigation { get; set; }
+
+    private static string DefaultHerf = string.Empty;
+
+    private void OnHerf(string? name = null)
+    {
+        if (DefaultHerf !=  name)
+        {
+            DefaultHerf = name;
+            navigation!.NavigateTo("/" + DefaultHerf);
+        }
+    }
+}

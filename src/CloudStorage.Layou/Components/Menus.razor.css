@@ -1,0 +1,25 @@
+﻿
+.menu-function {
+    transition: 0.3s;
+    margin: 4px;
+    height: 30px;
+    border-radius: 6px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    .menu-function:hover {
+        transition: 0.3s;
+        background-color: dodgerblue;
+        transform: scale(0.95);
+    }
+.menu-click {
+    border-color: rgb(255 255 255 / 10%) rgb(255 255 255 / 10%) rgb(255 255 255 / 10%) #dc3545;
+    border-style: inset;
+}
+
+.menu-not-click {
+    transition:0.3s;
+}

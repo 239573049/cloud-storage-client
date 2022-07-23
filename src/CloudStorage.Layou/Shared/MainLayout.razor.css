@@ -1,0 +1,24 @@
+﻿
+.main {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.body {
+    transition: 0.3s;
+    background-color: #EEEEEE;
+    height: 100%;
+    width: calc(100% - 150px);
+    float: left;
+    overflow: auto;
+}
+
+.body-lessen {
+    transition: 0.3s;
+    background-color: #EEEEEE;
+    height: 100%;
+    width: calc(100% - 50px);
+    float: left;
+    overflow: auto;
+}

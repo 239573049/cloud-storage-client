@@ -1,0 +1,20 @@
+﻿
+<div class="menu-function @Class" @onclick="(a)=>OnClick?.Invoke(a)">
+    <MIcon>@Icon</MIcon>
+    <span>@Text</span>
+</div>
+
+
+@code{
+    [Parameter]
+    public Action<MouseEventArgs>? OnClick { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string? Icon { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

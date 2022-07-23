@@ -1,0 +1,40 @@
+﻿@page "/Storages"
+
+<div>
+    @for (var i = 0; i < 2; i++)
+    {
+        <MCard Flat Class="list">
+            <MImage Style="border-radius: 18px;"
+                Src="https://ts1.cn.mm.bing.net/th?id=OIP-C.IbgYcbCHfUUtfweGMKAjTwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2">
+            </MImage>
+            <div style="font-size:25px">···</div>
+        </MCard>
+    }
+</div>
+@code {
+
+}
+
+<style>
+
+    .list {
+        transition: .3s;
+        float: left;
+        height: 180px;
+        margin: 5px;
+        border-radius: 18px !important;
+        width: 153px;
+        text-align: center;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #EEEEEE !important;
+    }
+
+        .list:hover {
+            transition: .3s;
+            transform: scale(0.9);
+        }
+
+</style>

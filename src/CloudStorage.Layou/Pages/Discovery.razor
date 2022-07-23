@@ -1,0 +1,55 @@
+﻿@page "/"
+
+
+<MCard Class="content-list">
+    <div class="recent-documents">
+        最近文件
+    </div>
+    <div class="recent-content">
+        <div>
+            <div style="float: left;width:100px;">
+                <MImage MaxWidth="@("100px")"
+                        MaxHeight="@("150px")"
+                        Src="https://cdn.masastack.com/stack/images/website/masa-blazor/parallax/material2.jpg">
+                </MImage>
+            </div>
+            <div class="recent-text">
+                <div>
+                    文件名称
+                </div>
+                <div>
+                    时间 2022-7-23
+                </div>
+            </div>
+        </div>
+    </div>
+</MCard>
+
+@code {
+
+}
+
+
+<style>
+    .content-list {
+        margin: 10px;
+        padding: 15px;
+        max-height: 150px;
+        position: fixed;
+        width: 100%;
+    }
+
+    .recent-documents {
+        font-size: 20px;
+    }
+
+    .recent-content {
+        min-height: 50px;
+        width: 100%;
+    }
+
+    .recent-text {
+        padding-left: 10px;
+        font-size: 15px;
+    }
+</style>

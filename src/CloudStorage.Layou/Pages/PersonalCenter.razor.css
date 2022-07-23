@@ -1,0 +1,29 @@
+﻿.personal {
+    margin: 10px;
+}
+
+.user {
+    width: 100%;
+}
+
+.avatar {
+    width: 150px;
+    float: left;
+   
+}
+
+.user-info {
+    width: 100px;
+    float: left;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.user-lime {
+    padding-top: 160px;
+    
+}
+
+.settings {
+    padding-top: 20px;
+}
