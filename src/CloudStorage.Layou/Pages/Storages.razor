@@ -7,14 +7,14 @@
             <MImage Style="border-radius: 18px;"
                 Src="https://ts1.cn.mm.bing.net/th?id=OIP-C.IbgYcbCHfUUtfweGMKAjTwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2">
             </MImage>
-            <div style="font-size:25px">···</div>
+            <div class="function" @onclick=OnFunctionClick><p>···</p></div>
         </MCard>
     }
 </div>
-@code {
 
-}
+<StorageFunction HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value">
 
+</StorageFunction>
 <style>
 
     .list {
@@ -37,4 +37,26 @@
             transform: scale(0.9);
         }
 
+    .function {
+        transition: .3s;
+        font-size: 25px;
+        border-radius: 18px;
+        background-color: #FFD700;
+        margin: 5px;
+    }
+
+        .function:hover {
+            transition: .3s;
+            background-color: #5682e7;
+           
+        }
+
+        .function p {
+            transition: 0.6s;
+        }
+
+            .function p:hover {
+                transition: 0.6s;
+                transform: rotate(-180deg);
+            }
 </style>

@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F273E5C7-ED2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Applications", "src\CloudStorage.Applications\CloudStorage.Applications.csproj", "{217A3804-6E37-417C-9D3A-9FCB30EFB6FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage.Client", "src\CloudStorage.Client\CloudStorage.Client.csproj", "{620A293E-F251-49D9-998B-1EE975D973E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Client", "src\CloudStorage.Client\CloudStorage.Client.csproj", "{620A293E-F251-49D9-998B-1EE975D973E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

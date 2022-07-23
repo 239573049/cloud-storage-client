@@ -9,6 +9,6 @@ partial class PersonalCenter
 
     private void OnLogoutClick(MouseEventArgs args)
     {
-        Navigation.NavigateTo("/login");
+        Navigation?.NavigateTo("/login");
     }
 }
