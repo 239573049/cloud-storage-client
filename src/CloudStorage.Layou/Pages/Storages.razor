@@ -1,19 +1,21 @@
 ﻿@page "/Storages"
 
 <div>
-    @for (var i = 0; i < 10; i++)
+    @foreach (var item in StorageList.Items)
     {
         <MCard Flat Class="list">
             <MImage Style="border-radius: 18px;"
-                Src="https://ts1.cn.mm.bing.net/th?id=OIP-C.IbgYcbCHfUUtfweGMKAjTwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2">
+            MaxHeight="150"
+            MaxWidth="100"
+                Src="@(item.Icon)">
             </MImage>
-            <div>文件名称</div>
-            <div class="function" @onclick=OnFunctionClick><p>···</p></div>
+            <div>@item.Path</div>
+            <div class="function" @onclick="()=>OnFunctionClick(item.Id)"><p>···</p></div>
         </MCard>
     }
 </div>
 
-<Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value">
+<Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value" StorageId="StorageId">
 
 </Storagefile>
 <style>
@@ -21,10 +23,10 @@
     .list {
         transition: .3s;
         float: left;
-        height: 210px;
+        height: 150px;
         margin: 5px;
         border-radius: 18px !important;
-        width: 153px;
+        width: 100px;
         text-align: center;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -41,9 +43,9 @@
 
     .function {
         transition: .3s;
-        font-size: 20px;
+        font-size: 16px;
         border-radius: 18px;
-        height:25px;
+        height: 20px;
         background-color: #FFD700;
         margin: 5px;
     }

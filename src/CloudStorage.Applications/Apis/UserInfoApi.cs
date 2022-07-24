@@ -13,15 +13,4 @@ public class UserInfoApi : IScopedDependency
         this.httpClientFactory = httpClientFactory;
     }
 
-    public  Task UploadFileListAsync(IReadOnlyList<IBrowserFile> files)
-    {
-        var formData = new MultipartFormDataContent();
-        foreach (var d in files)
-        {
-            formData.Add(new StreamContent(d.OpenReadStream(d.Size)), "files", d.Name);
-        }
-
-        var httpclient = httpClientFactory.CreateClient(string.Empty);
-
-    }
 }

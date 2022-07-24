@@ -10,9 +10,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Applications",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Client", "src\CloudStorage.Client\CloudStorage.Client.csproj", "{620A293E-F251-49D9-998B-1EE975D973E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorageWinfrom", "src\CloudStorageWinfrom\CloudStorageWinfrom.csproj", "{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorageWinfrom", "src\CloudStorageWinfrom\CloudStorageWinfrom.csproj", "{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStoage.Domain", "src\CloudStoage.Domain\CloudStoage.Domain.csproj", "{488A8AB6-5D80-4353-BE97-CB74788F7E2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStoage.Domain", "src\CloudStoage.Domain\CloudStoage.Domain.csproj", "{488A8AB6-5D80-4353-BE97-CB74788F7E2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Domain.Shared", "src\CloudStorage.Domain.Shared\CloudStorage.Domain.Shared.csproj", "{4331F054-E1B1-4F06-91EC-EB092AFF5DE8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Token.MAUI.Module", "..\token-module\src\Token.MAUI.Module\Token.MAUI.Module.csproj", "{381C8922-19CE-477A-842C-113782B43198}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,14 @@ Global
 		{488A8AB6-5D80-4353-BE97-CB74788F7E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{488A8AB6-5D80-4353-BE97-CB74788F7E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{488A8AB6-5D80-4353-BE97-CB74788F7E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4331F054-E1B1-4F06-91EC-EB092AFF5DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4331F054-E1B1-4F06-91EC-EB092AFF5DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4331F054-E1B1-4F06-91EC-EB092AFF5DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4331F054-E1B1-4F06-91EC-EB092AFF5DE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{381C8922-19CE-477A-842C-113782B43198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381C8922-19CE-477A-842C-113782B43198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381C8922-19CE-477A-842C-113782B43198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381C8922-19CE-477A-842C-113782B43198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +64,8 @@ Global
 		{620A293E-F251-49D9-998B-1EE975D973E0} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 		{488A8AB6-5D80-4353-BE97-CB74788F7E2C} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
+		{4331F054-E1B1-4F06-91EC-EB092AFF5DE8} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
+		{381C8922-19CE-477A-842C-113782B43198} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CloudStorage.Domain.Shared\CloudStorage.Domain.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

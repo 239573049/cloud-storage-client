@@ -1,4 +1,4 @@
-﻿namespace CloudStoage.Domain;
+﻿namespace CloudStoage.Domain.HttpModule.Result;
 
 public class UploadFileListDto
 {
