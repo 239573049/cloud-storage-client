@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Applications",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage.Client", "src\CloudStorage.Client\CloudStorage.Client.csproj", "{620A293E-F251-49D9-998B-1EE975D973E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorageWinfrom", "src\CloudStorageWinfrom\CloudStorageWinfrom.csproj", "{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{620A293E-F251-49D9-998B-1EE975D973E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{620A293E-F251-49D9-998B-1EE975D973E0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{620A293E-F251-49D9-998B-1EE975D973E0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 		{8D306314-40BC-43EA-A4F3-E0FCBE72E988} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 		{217A3804-6E37-417C-9D3A-9FCB30EFB6FA} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 		{620A293E-F251-49D9-998B-1EE975D973E0} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
+		{1A4D6CE4-F4B3-499F-8704-C7CF967D98CE} = {F273E5C7-ED21-49B8-BE7D-DE6CBE88C328}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

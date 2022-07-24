@@ -7,5 +7,6 @@ partial class MainLayout
     private void OnClick()
     {
         MenuShow = !MenuShow;
+        StateHasChanged();
     }
 }
