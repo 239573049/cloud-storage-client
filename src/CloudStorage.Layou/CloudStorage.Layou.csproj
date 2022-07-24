@@ -17,8 +17,4 @@
     <PackageReference Include="Token.MAUI.Module" Version="1.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CloudStorage.Applications\CloudStorage.Applications.csproj" />
-  </ItemGroup>
-
 </Project>

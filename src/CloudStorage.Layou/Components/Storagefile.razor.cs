@@ -1,7 +1,7 @@
 
 namespace CloudStorage.Layou.Components;
 
-partial class StorageFunction
+partial class Storagefile
 {
     [Parameter]
     public bool HasFybctuib { get; set; }
