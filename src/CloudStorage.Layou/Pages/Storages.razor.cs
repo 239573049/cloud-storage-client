@@ -7,7 +7,7 @@ namespace CloudStorage.Layou.Pages;
 partial class Storages
 {
     private bool HasFybctuib;
-
+    private bool Load = false;
     /// <summary>
     /// 当前文件夹id
     /// </summary>
@@ -44,6 +44,17 @@ partial class Storages
     /// <returns></returns>
     private async Task GetStorageListAsync()
     {
+        Load=true;
         StorageList = await StorageApi.GetStorageListAsync(GetStorageListInput);
+        Load=false;
+    }
+
+    /// <summary>
+    /// 刷新
+    /// </summary>
+    /// <returns></returns>
+    private async Task RefreshAsync()
+    {
+        await GetStorageListAsync();
     }
 }

@@ -24,7 +24,7 @@
                     </MListItem>
 
                     <MListItem @key="Guid.NewGuid()"
-                               OnClick="() => {}">
+                               OnClick="() =>RefreshAsync()">
                         <MListItemTitle>刷新</MListItemTitle>
                     </MListItem>
                 </MList>
@@ -51,6 +51,13 @@
 <Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value" StorageId="ClickStorageId">
 
 </Storagefile>
+
+
+<MOverlay Value="Load">
+    <MProgressCircular indeterminate
+                       Size="64"></MProgressCircular>
+</MOverlay>
+
 <style>
 
     .list {
