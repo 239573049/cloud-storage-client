@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Masa.Blazor" Version="0.5.0-rc.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.7" />
-    <PackageReference Include="Token.MAUI.Module" Version="1.0.3" />
+    <PackageReference Include="Token.MAUI.Module" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

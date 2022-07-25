@@ -50,7 +50,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\token-module\src\Token.MAUI.Module\Token.MAUI.Module.csproj" />
       <ProjectReference Include="..\CloudStorage.Layou\CloudStorage.Layou.csproj" />
     </ItemGroup>
 

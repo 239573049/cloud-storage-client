@@ -2,19 +2,19 @@
     <MBottomSheet Inset Value=HasFybctuib ValueChanged="ValueChange" Style="height:auto;">
         <ChildContent>
             <div class="info">
-                
-            <div style="float: left;width:100px;">
-                <MImage Src="https://picsum.photos/350/165?random"
-                        MaxHeight="@("200px")"
-                        MaxWidth="@("200px")"
+
+                <div style="float: left;width:55px;">
+                    <MImage Src="@Storageo.CloudUrl"
+                            MaxHeight="@("55px")"
+                            MaxWidth="@("55px")"
                         Class="grey darken-4"></MImage>
                 </div>
                 <div style="margin-left:10px">
                     <div>
-                        文件名称。。。。。。。。。。。
+                        @Storageo.Path
                     </div>
                     <div style="font-size:12px">
-                        文件名称。。。。。。。。。。。
+                        @Storageo.CreationTime
                     </div>
                 </div>
                 <MDivider></MDivider>

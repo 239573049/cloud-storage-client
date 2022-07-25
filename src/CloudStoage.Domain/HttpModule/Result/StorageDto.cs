@@ -15,10 +15,21 @@ public class StorageDto
     /// </summary>
     public StorageType Type { get; set; }
 
+    private string? storagePath;
+
     /// <summary>
     /// 云盘实际路径
     /// </summary>
-    public string? StoragePath { get; set; }
+    public string? StoragePath
+    {
+        get
+        {
+            return storagePath;
+        }
+        set { storagePath = value; }
+    }
+
+
 
     /// <summary>
     /// 虚拟路径
@@ -45,10 +56,25 @@ public class StorageDto
     /// </summary>
     public string? Icon { get; set; }
 
-    /// <summary>
-    /// url
-    /// </summary>
-    public string? CloudUrl { get; set; }
+    private string? cloudUrl;
 
-    public DateTime CreationTime { get; set; }
+    public string? CloudUrl
+    {
+        get
+        {
+            if (Preview)
+            {
+                return cloudUrl;
+            }
+            return Constant.Api + cloudUrl;
+        }
+        set { cloudUrl = value; }
+    }
+
+    /// <summary>
+    /// 是否预览
+    /// </summary>
+    public bool Preview { get; set; } = false;
+
+    public DateTime? CreationTime { get; set; }
 }

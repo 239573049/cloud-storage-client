@@ -109,4 +109,20 @@ public class StorageApi : IScopedDependency
             return;
         }
     }
+
+    /// <summary>
+    /// 获取详情
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<StorageDto> GetStorageAsync(Guid? id)
+    {
+        var httpclient = httpClientFactory.CreateClient(string.Empty);
+
+        var message = await httpclient.GetStringAsync(Name + "/storage/"+id);
+
+        var data = JsonConvert.DeserializeObject<ModelStateResult<StorageDto>>(message);
+
+        return data.Data;
+    }
 }

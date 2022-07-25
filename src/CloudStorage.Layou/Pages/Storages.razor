@@ -1,21 +1,54 @@
 ﻿@page "/Storages"
 
 <div>
+
+    <MToolbar Dark
+              Prominent
+              Height="55"
+              Src="https://cdn.masastack.com/stack/images/website/masa-blazor/backgrounds/banner.png">
+
+        <MButton Icon hidden="@(GetStorageListInput?.StorageId is null)">
+            <MIcon>mdi-arrow-left</MIcon>
+        </MButton>
+        <MSpacer></MSpacer>
+        <MMenu Left
+               Bottom>
+            <ActivatorContent>
+                <MAppBarNavIcon  @attributes="@context.Attrs"></MAppBarNavIcon>
+            </ActivatorContent>
+            <ChildContent>
+                <MList>
+                    <MListItem @key="Guid.NewGuid()"
+                               OnClick="() => {}">
+                        <MListItemTitle>创建文件</MListItemTitle>
+                    </MListItem>
+
+                    <MListItem @key="Guid.NewGuid()"
+                               OnClick="() => {}">
+                        <MListItemTitle>刷新</MListItemTitle>
+                    </MListItem>
+                </MList>
+            </ChildContent>
+        </MMenu>
+    </MToolbar>
     @foreach (var item in StorageList.Items)
     {
         <MCard Flat Class="list">
             <MImage Style="border-radius: 18px;"
-            MaxHeight="150"
-            MaxWidth="100"
-                Src="@(item.Icon)">
+                MaxHeight="85"
+                MaxWidth="70"
+                Height="85"
+                Src="@(item.Preview?item.Icon:item.CloudUrl)">
             </MImage>
-            <div>@item.Path</div>
+            <div style="max-height: 20px;text-overflow: ellipsis;overflow: hidden;">
+                @item.Path
+            </div>
             <div class="function" @onclick="()=>OnFunctionClick(item.Id)"><p>···</p></div>
         </MCard>
     }
 </div>
 
-<Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value" StorageId="StorageId">
+<Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value" StorageId="ClickStorageId">
 
 </Storagefile>
 <style>
@@ -33,7 +66,7 @@
         -ms-user-select: none;
         user-select: none;
         background-color: #EEEEEE !important;
-        top:20px;
+        top: 20px;
     }
 
         .list:hover {
@@ -53,7 +86,6 @@
         .function:hover {
             transition: .3s;
             background-color: #5682e7;
-           
         }
 
         .function p {

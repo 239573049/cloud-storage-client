@@ -8,7 +8,15 @@ partial class Storages
 {
     private bool HasFybctuib;
 
-    public Guid? StorageId { get; set; } 
+    /// <summary>
+    /// 当前文件夹id
+    /// </summary>
+    public Guid StorageId { get; set; } = Guid.Empty;
+
+    /// <summary>
+    /// 当前点击的文件id
+    /// </summary>
+    public Guid? ClickStorageId { get; set; }
     public GetStorageListInput GetStorageListInput { get; set; } = new GetStorageListInput();
 
     /// <summary>
@@ -20,7 +28,7 @@ partial class Storages
     public StorageApi StorageApi { get; set; }
     private void OnFunctionClick(Guid id)
     {
-        StorageId=id;
+        ClickStorageId = id;
         HasFybctuib = true;
         StateHasChanged();
     }
