@@ -125,4 +125,38 @@ public class StorageApi : IScopedDependency
 
         return data.Data;
     }
+
+    /// <summary>
+    /// 获取上一级
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    public async Task<Guid?> GoBackAsync(Guid? Id)
+    {
+        var httpclient = httpClientFactory.CreateClient(string.Empty);
+
+        var message = await httpclient.GetStringAsync(Name + "/go-back?id="+ Id);
+
+        var data = JsonConvert.DeserializeObject<ModelStateResult<Guid?>>(message);
+
+        return data.Data;
+    }
+
+    /// <summary>
+    /// 删除指定文件或文件夹
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task DeleteStorageAsync(Guid id)
+    {
+        var httpclient = httpClientFactory.CreateClient(string.Empty);
+
+        var message = await httpclient.DeleteAsync(Name + "/storage/" + id);
+
+        if (message.IsSuccessStatusCode)
+        {
+            return;
+        }
+
+    }
 }

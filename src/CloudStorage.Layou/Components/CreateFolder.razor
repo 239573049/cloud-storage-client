@@ -1,0 +1,32 @@
+﻿
+<MDialog @bind-Value="Dialog"
+         Persistent
+         MaxWidth="600">
+    <ChildContent>
+        <MCard>
+            <MCardTitle>
+                <span class="text-h5">User Profile</span>
+            </MCardTitle>
+            <MCardText>
+                <MContainer>
+                    <MRow>
+                        <MTextField Label="请输入文件夹名称" @bind-Value=Name></MTextField>
+                    </MRow>
+                </MContainer>
+            </MCardText>
+            <MCardActions>
+                <MSpacer></MSpacer>
+                <MButton Color="blue darken-1"
+                         Text
+                         OnClick="() => Dialog = false">
+                    取消
+                </MButton>
+                <MButton Color="blue darken-1"
+                         Text
+                         OnClick="OnClickAsync">
+                    保存
+                </MButton>
+            </MCardActions>
+        </MCard>
+    </ChildContent>
+</MDialog>
