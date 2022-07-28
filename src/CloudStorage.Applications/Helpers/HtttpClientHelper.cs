@@ -23,24 +23,22 @@ public class HtttpClientHelper : IScopedDependency
         ProgressMessageHandler progressMessageHandler = new(handler);
         progressMessageHandler.HttpSendProgress += eventHandler;
 
-        using (HttpClient httpClient = new(progressMessageHandler))
-        {
-            httpClient.BaseAddress = new Uri(Constant.Api);
-            httpClient.DefaultRequestHeaders
-                .Add(Constant.Authorization, http.DefaultRequestHeaders.FirstOrDefault(x => x.Key == Constant.Authorization).Value);
-            using (var multipartFormData = new MultipartFormDataContent())
-            {
-                foreach (var d in files)
-                {
-                    multipartFormData.Add(new StreamContent(d.OpenReadStream(d.Size)), "files", d.Name);
-                }
-                var response = await httpClient.PostAsync(Name + "/upload-file-list?storageId=" + storageId, multipartFormData);
+        using HttpClient httpClient = new(progressMessageHandler);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return;
-                }
-            }
+        httpClient.BaseAddress = new Uri(Constant.Api);
+        httpClient.DefaultRequestHeaders
+            .Add(Constant.Authorization, http.DefaultRequestHeaders.FirstOrDefault(x => x.Key == Constant.Authorization).Value);
+
+        using var multipartFormData = new MultipartFormDataContent();
+        foreach (var d in files)
+        {
+            multipartFormData.Add(new StreamContent(d.OpenReadStream(d.Size)), "files", d.Name);
+        }
+        var response = await httpClient.PostAsync(Name + "/upload-file-list?storageId=" + storageId, multipartFormData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return;
         }
 
 
