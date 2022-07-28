@@ -1,9 +1,11 @@
 using CloudStoage.Domain.HttpModule.Input;
 using CloudStoage.Domain.HttpModule.Result;
-using CloudStorage.Layou.Components;
+using CloudStorage.Applications.Helpers;
 using CloudStorage.Layou.Helper;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
+using System.Diagnostics;
+using System.Net.Http.Handlers;
 using Token.EventBus;
 
 namespace CloudStorage.Layou.Pages;
@@ -29,6 +31,9 @@ partial class Storages
     [Inject]
     public IDistributedEventBus<string> DistributedEventBus { get; set; }
 
+    [Inject]
+    public IPopupService PopupService { get; set; }
+
     /// <summary>
     /// js工具
     /// </summary>
@@ -37,6 +42,9 @@ partial class Storages
 
     [Inject]
     public StorageApi StorageApi { get; set; }
+
+    [Inject]
+    public HtttpClientHelper HtttpClientHelper { get; set; }
 
     public const string inputFileId = "inputfile";
 
@@ -110,9 +118,16 @@ partial class Storages
         var files = eventArgs.GetMultipleFiles(10);
         if (files.Count > 0)
         {
-            await StorageApi.UploadFileListAsync(files, GetStorageListInput.StorageId);
+            await PopupService.ToastAsync("上传文件", BlazorComponent.AlertTypes.Info);
+            await HtttpClientHelper.UpdateRand(files, GetStorageListInput.StorageId, HttpSendProgress);
+            await PopupService.ToastAsync("上传完成", BlazorComponent.AlertTypes.Success);
             await GetStorageListAsync();
             StateHasChanged();
         }
+    }
+
+    private void HttpSendProgress(object sender, HttpProgressEventArgs e)
+    {
+        Debug.WriteLine(e.ProgressPercentage + "%");
     }
 }
