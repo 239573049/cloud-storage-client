@@ -21,6 +21,6 @@ partial class FileFunction
     {
         await StorageApi.DeleteStorageAsync(StorageId);
 
-        await DistributedEventBus.PublishAsync(nameof(Storagefile.HasFybctuib), false);
+        await DistributedEventBus.PublishAsync("HasFybctuib", false);
     }
 }
