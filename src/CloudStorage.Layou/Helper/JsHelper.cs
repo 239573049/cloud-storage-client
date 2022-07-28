@@ -1,5 +1,5 @@
 ﻿using Microsoft.JSInterop;
-using Token.MAUI.Module.Dependencys;
+using Token.Module.Dependencys;
 
 namespace CloudStorage.Layou.Helper;
 

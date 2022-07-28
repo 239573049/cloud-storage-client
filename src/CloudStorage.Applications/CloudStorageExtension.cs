@@ -1,4 +1,5 @@
 ﻿using CloudStoage.Domain;
+using CloudStorage.Applications.Filter;
 using CloudStorage.Applications.Helpers;
 using CloudStorage.Applications.Manage;
 
@@ -13,5 +14,13 @@ public static class CloudStorageExtension
         {
             statsManage.Token =await ConfigFile.GetConfigAsync(Constant.Token);
         }
+    }
+
+    public static void UseExceptionFilter(this MauiApp app)
+    {
+
+        var exceptionFilter = app.Services.GetRequiredService<ExceptionFilter>();
+
+        AppDomain.CurrentDomain.FirstChanceException += exceptionFilter.ExceptionHandle;
     }
 }

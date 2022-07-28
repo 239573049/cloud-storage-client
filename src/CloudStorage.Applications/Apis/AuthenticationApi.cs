@@ -3,7 +3,7 @@ using CloudStoage.Domain.HttpModule;
 using CloudStoage.Domain.HttpModule.Input;
 using Masa.Blazor;
 using System.Net.Http.Json;
-using Token.MAUI.Module.Dependencys;
+using Token.Module.Dependencys;
 
 namespace CloudStorage.Applications.Apis;
 

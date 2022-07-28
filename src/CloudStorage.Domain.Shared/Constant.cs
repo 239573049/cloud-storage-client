@@ -4,7 +4,7 @@ public class Constant
 {
     public const string Token = "token";
 
-    public const string Api = "https://localhost:8081";
+    public const string Api = "https://124.222.27.83";
 
     public const string DateTimeStr = "yyyy-MM-dd HH-mm-ss";
 

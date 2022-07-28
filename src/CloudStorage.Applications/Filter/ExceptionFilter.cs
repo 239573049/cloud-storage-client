@@ -1,7 +1,7 @@
 ﻿using CloudStoage.Domain;
 using Microsoft.Extensions.Logging;
 using System.Runtime.ExceptionServices;
-using Token.MAUI.Module.Dependencys;
+using Token.Module.Dependencys;
 
 namespace CloudStorage.Applications.Filter;
 

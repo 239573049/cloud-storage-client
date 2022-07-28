@@ -1,11 +1,12 @@
 ﻿using CloudStoage.Domain;
 using CloudStorage.Applications.Filter;
 using CloudStorage.Applications.Manage;
-using Token.MAUI.Module;
+using System.Security.Authentication;
+using Token.Module;
 
 namespace CloudStorage.Applications;
 
-public class CloudStorageApplicationsModule : MauiModule
+public class CloudStorageApplicationsModule : TokenModule
 {
     public override async void ConfigureServices(IServiceCollection services)
     {
@@ -21,17 +22,12 @@ public class CloudStorageApplicationsModule : MauiModule
             {
                 builder.PrimaryHandler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (m, c, ch, e) => true,
+                    ServerCertificateCustomValidationCallback = (m, c, ch, e) => true
+                  
                 }; 
             });
 
        await services.Initialize();
     }
 
-    public override void OnApplicationShutdown(MauiApp app)
-    {
-        var exceptionFilter = app.Services.GetRequiredService<ExceptionFilter>();
-
-        AppDomain.CurrentDomain.FirstChanceException += exceptionFilter.ExceptionHandle;
-    }
 }

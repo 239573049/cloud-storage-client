@@ -1,5 +1,6 @@
 ﻿using CloudStorage.Layou;
-using Token.MAUI.Module.Extensions;
+using Token.Module.Extensions;
+using CloudStorage.Applications;
 
 namespace CloudStorage.Client;
 
@@ -24,7 +25,7 @@ public static class MauiProgram
 
         var app = builder.Build();
 
-        app.InitializeApplication();
+        app.UseExceptionFilter();
 
         return app;
     }
