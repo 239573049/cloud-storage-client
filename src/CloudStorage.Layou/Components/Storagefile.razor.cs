@@ -33,10 +33,10 @@ partial class Storagefile
     public StorageApi StorageApi { get; set; }
 
     [Inject]
-    public IDistributedEventBus<bool> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<bool> DistributedEventBus { get; set; }
 
     [Inject]
-    public IDistributedEventBus<string> StringDstributedEventBus { get; set; }
+    public IKeyLocalEventBus<string> StringDstributedEventBus { get; set; }
 
     /// <summary>
     /// пео╒

@@ -1,4 +1,5 @@
 ﻿using CloudStoage.Domain;
+using CloudStoage.Domain.Etos;
 using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Handlers;
 using Token.Module.Dependencys;
@@ -16,7 +17,7 @@ public class HtttpClientHelper : IScopedDependency
         this.httpClientFactory = httpClientFactory;
     }
 
-    public async Task UpdateRand(IReadOnlyList<IBrowserFile> files, Guid? storageId = null, EventHandler<HttpProgressEventArgs> eventHandler = null)
+    public async Task UpdateRand(UploadingEto files, EventHandler<HttpProgressEventArgs> eventHandler = null)
     {
         var http = httpClientFactory.CreateClient(string.Empty);
         HttpClientHandler handler = new();
@@ -28,19 +29,14 @@ public class HtttpClientHelper : IScopedDependency
         httpClient.BaseAddress = new Uri(Constant.Api);
         httpClient.DefaultRequestHeaders
             .Add(Constant.Authorization, http.DefaultRequestHeaders.FirstOrDefault(x => x.Key == Constant.Authorization).Value);
-
-        using var multipartFormData = new MultipartFormDataContent();
-        foreach (var d in files)
+        httpClient.DefaultRequestHeaders.Add("id", files.Id.ToString());
+        
+        using var multipartFormData = new MultipartFormDataContent
         {
-            multipartFormData.Add(new StreamContent(d.OpenReadStream(d.Size)), "files", d.Name);
-        }
-        var response = await httpClient.PostAsync(Name + "/upload-file-list?storageId=" + storageId, multipartFormData);
+            { new StreamContent(files.Stream), "file", files.FileName }
+        };
 
-        if (response.IsSuccessStatusCode)
-        {
-            return;
-        }
-
+        var response = await httpClient.PostAsync(Name + "/upload-file?storageId=" + files.StorageId, multipartFormData);
 
     }
 

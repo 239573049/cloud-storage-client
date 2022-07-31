@@ -15,7 +15,7 @@ partial class FileFunction
     public StorageApi StorageApi { get; set; }
 
     [Inject]
-    public IDistributedEventBus<bool> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<bool> DistributedEventBus { get; set; }
 
     private async void DeleteFileAsync()
     {

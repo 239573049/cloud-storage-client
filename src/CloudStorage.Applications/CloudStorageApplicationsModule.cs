@@ -1,11 +1,13 @@
 ﻿using CloudStoage.Domain;
-using CloudStorage.Applications.Filter;
 using CloudStorage.Applications.Manage;
-using System.Security.Authentication;
+using Token.EventBus;
 using Token.Module;
+using Token.Module.Attributes;
 
 namespace CloudStorage.Applications;
 
+[DependOn(
+    typeof(TokenEventBusModule))]
 public class CloudStorageApplicationsModule : TokenModule
 {
     public override async void ConfigureServices(IServiceCollection services)

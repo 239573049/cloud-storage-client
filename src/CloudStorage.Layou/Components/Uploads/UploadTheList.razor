@@ -1,0 +1,13 @@
+﻿<div>
+    @foreach (var d in UploadingEventBus.UploadingList)
+    {
+        <MCard Class="upload-list">
+            <div>@d.FileName</div>
+            <MContainer>
+                <MProgressLinear Value="@d.Progress" Height="25" >
+                    <strong>@($"{context}%")</strong>
+                </MProgressLinear>
+            </MContainer>
+        </MCard>
+    }
+</div>

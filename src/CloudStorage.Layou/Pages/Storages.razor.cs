@@ -1,3 +1,4 @@
+using CloudStoage.Domain.Etos;
 using CloudStoage.Domain.HttpModule.Input;
 using CloudStoage.Domain.HttpModule.Result;
 using CloudStorage.Applications.Helpers;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using System.Diagnostics;
 using System.Net.Http.Handlers;
 using Token.EventBus;
+using Token.EventBus.EventBus;
 
 namespace CloudStorage.Layou.Pages;
 
@@ -29,7 +31,10 @@ partial class Storages
     public PagedResultDto<StorageDto> StorageList { get; set; } = new PagedResultDto<StorageDto>();
 
     [Inject]
-    public IDistributedEventBus<string> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<string> DistributedEventBus { get; set; }
+
+    [Inject]
+    public ILocalEventBus LocalEventBus { get; set; }
 
     [Inject]
     public IPopupService PopupService { get; set; }
@@ -119,15 +124,17 @@ partial class Storages
         if (files.Count > 0)
         {
             await PopupService.ToastAsync("上传文件", BlazorComponent.AlertTypes.Info);
-            await HtttpClientHelper.UpdateRand(files, GetStorageListInput.StorageId, HttpSendProgress);
-            await PopupService.ToastAsync("上传完成", BlazorComponent.AlertTypes.Success);
-            await GetStorageListAsync();
+            var uploadings = files.Select(x => new UploadingEto
+            {
+                Id = Guid.NewGuid(),
+                FileName = x.Name,
+                Length = x.Size,
+                Stream = x.OpenReadStream(x.Size)
+            }).ToList();
+
+            await LocalEventBus.PublishAsync(uploadings,false);
             StateHasChanged();
         }
     }
 
-    private void HttpSendProgress(object sender, HttpProgressEventArgs e)
-    {
-        Debug.WriteLine(e.ProgressPercentage + "%");
-    }
 }

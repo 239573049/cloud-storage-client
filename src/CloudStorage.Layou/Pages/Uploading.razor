@@ -1,7 +1,11 @@
 ﻿@page "/Uploading"
+@using CloudStorage.Layou.Components.Uploads
 
-<h3>上传列表</h3>
+<MTabs>
+    <MTab>上传列表</MTab>
+    <MTab>下载列表</MTab>
+    <MTab>上传记录</MTab>
+    <MTab>下载记录</MTab>
+</MTabs>
 
-@code {
-
-}
+<UploadTheList />

@@ -32,7 +32,7 @@ partial class CreateFolder
     [Inject]
     public StorageApi StorageApi { get; set; }
     [Inject]
-    public IDistributedEventBus<string> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<string> DistributedEventBus { get; set; }
 
     /// <summary>
     /// 创建文件夹事件
