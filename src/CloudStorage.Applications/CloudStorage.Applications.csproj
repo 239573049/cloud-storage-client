@@ -21,6 +21,8 @@
 	  <PackageReference Include="Masa.Blazor" Version="0.5.0-rc.6" />
 	  <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
 	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.7" />
+	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.7" />
+	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="6.0.7" />
 	  <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="Token.EventBus" Version="1.1.1" />
