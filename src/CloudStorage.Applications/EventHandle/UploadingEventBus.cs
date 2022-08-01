@@ -2,6 +2,7 @@
 using CloudStoage.Domain.Etos;
 using CloudStorage.Applications.Helpers;
 using CloudStorage.Domain.Shared;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
@@ -17,6 +18,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
     public BlockingCollection<UploadingDto> UploadingList { get; set; } = new BlockingCollection<UploadingDto>();
 
     private readonly IKeyLocalEventBus<Tuple<long, Guid>> KeyLocalEventBus;
+    private readonly IKeyLocalEventBus<string> DistributedEventBus;
 
     private readonly TokenManage token;
 
@@ -24,11 +26,12 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 
     private HubConnection connection;
 
-    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<Tuple<long, Guid>> keyLocalEventBus, TokenManage token)
+    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<Tuple<long, Guid>> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus)
     {
         _htttpClientHelper = htttpClientHelper;
         KeyLocalEventBus = keyLocalEventBus;
         this.token = token;
+        DistributedEventBus = distributedEventBus;
     }
 
     public async Task HandleEventAsync(List<UploadingEto> eventData)
@@ -86,6 +89,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
             
             // 传输完成结束通道
             channel.Writer.Complete();
+            await DistributedEventBus.PublishAsync("Storages", "上传文件成功");
         }
     }
 
