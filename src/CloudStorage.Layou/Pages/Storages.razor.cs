@@ -1,10 +1,14 @@
+using CloudStoage.Domain.Etos;
 using CloudStoage.Domain.HttpModule.Input;
 using CloudStoage.Domain.HttpModule.Result;
-using CloudStorage.Layou.Components;
+using CloudStorage.Applications.Helpers;
 using CloudStorage.Layou.Helper;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
+using System.Diagnostics;
+using System.Net.Http.Handlers;
 using Token.EventBus;
+using Token.EventBus.EventBus;
 
 namespace CloudStorage.Layou.Pages;
 
@@ -27,7 +31,13 @@ partial class Storages
     public PagedResultDto<StorageDto> StorageList { get; set; } = new PagedResultDto<StorageDto>();
 
     [Inject]
-    public IDistributedEventBus<string> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<string> DistributedEventBus { get; set; }
+
+    [Inject]
+    public ILocalEventBus LocalEventBus { get; set; }
+
+    [Inject]
+    public IPopupService PopupService { get; set; }
 
     /// <summary>
     /// js工具
@@ -37,6 +47,9 @@ partial class Storages
 
     [Inject]
     public StorageApi StorageApi { get; set; }
+
+    [Inject]
+    public HtttpClientHelper HtttpClientHelper { get; set; }
 
     public const string inputFileId = "inputfile";
 
@@ -110,9 +123,18 @@ partial class Storages
         var files = eventArgs.GetMultipleFiles(10);
         if (files.Count > 0)
         {
-            await StorageApi.UploadFileListAsync(files, GetStorageListInput.StorageId);
-            await GetStorageListAsync();
+            await PopupService.ToastAsync("上传文件", BlazorComponent.AlertTypes.Info);
+            var uploadings = files.Select(x => new UploadingEto
+            {
+                Id = Guid.NewGuid(),
+                FileName = x.Name,
+                Length = x.Size,
+                Stream = x.OpenReadStream(x.Size)
+            }).ToList();
+
+            await LocalEventBus.PublishAsync(uploadings,false);
             StateHasChanged();
         }
     }
+
 }

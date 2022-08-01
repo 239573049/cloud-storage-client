@@ -15,12 +15,12 @@ partial class FileFunction
     public StorageApi StorageApi { get; set; }
 
     [Inject]
-    public IDistributedEventBus<bool> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<bool> DistributedEventBus { get; set; }
 
     private async void DeleteFileAsync()
     {
         await StorageApi.DeleteStorageAsync(StorageId);
 
-        await DistributedEventBus.PublishAsync(nameof(Storagefile.HasFybctuib), false);
+        await DistributedEventBus.PublishAsync("HasFybctuib", false);
     }
 }

@@ -4,6 +4,7 @@
     <Menus OnClick=OnClick Icon="@(MenuShow?"mdi-chevron-left":"mdi-chevron-right")" Text="@(MenuShow?"收起":"")"  />
     <Menus OnClick="(v)=>OnHerf(string.Empty)" Icon="mdi-egg-easter" Text="发现" Class="@(string.Empty==DefaultHerf?"menu-click":"menu-not-click")" />
     <Menus OnClick="(v)=>OnHerf(nameof(Storages))" Icon="mdi-nas" Text="云盘" Class="@(nameof(Storages)==DefaultHerf?"menu-click":"menu-not-click")" />
+    <Menus OnClick="(v)=>OnHerf(nameof(Uploading))" Icon="mdi-cloud-upload" Text="上传列表" Class="@(nameof(Uploading)==DefaultHerf?"menu-click":"menu-not-click")" />
     <Menus OnClick="(v)=>OnHerf(nameof(PersonalCenter))" Icon="mdi-owl" Text="个人中心" Class="@(nameof(PersonalCenter)==DefaultHerf?"menu-click":"menu-not-click")" />
 </div>
 

@@ -1,13 +1,24 @@
 
 using CloudStoage.Domain.HttpModule.Result;
+using CloudStorage.Layou.Pages;
 using Token.EventBus;
 
 namespace CloudStorage.Layou.Components;
 
 partial class Storagefile
 {
+    private bool hasFybctuib;
+
     [Parameter]
-    public bool HasFybctuib { get; set; }
+    public bool HasFybctuib
+    {
+        get { return hasFybctuib; }
+        set
+        {
+            hasFybctuib = value;
+            ValueChange.InvokeAsync(value);
+        }
+    }
 
     [Parameter]
     public EventCallback<bool> ValueChange { get; set; }
@@ -22,7 +33,10 @@ partial class Storagefile
     public StorageApi StorageApi { get; set; }
 
     [Inject]
-    public IDistributedEventBus<bool> DistributedEventBus { get; set; }
+    public IKeyLocalEventBus<bool> DistributedEventBus { get; set; }
+
+    [Inject]
+    public IKeyLocalEventBus<string> StringDstributedEventBus { get; set; }
 
     /// <summary>
     /// 信息
@@ -31,14 +45,16 @@ partial class Storagefile
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
-
-
         parameters.TryGetValue(nameof(StorageId), out Guid? storageId);
         if (storageId == null)
             return;
 
         parameters.TryGetValue(nameof(HasFybctuib), out bool hasFybctuib);
 
+        if (hasFybctuib == HasFybctuib)
+        {
+            return;
+        }
         HasFybctuib = hasFybctuib;
 
         parameters.TryGetValue(nameof(ValueChange), out EventCallback<bool> valueChange);
@@ -47,22 +63,21 @@ partial class Storagefile
 
         await GetStorageAsync(storageId);
 
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
         await HasFybctuibAsync();
+
+        StateHasChanged();
     }
 
     private async Task HasFybctuibAsync()
     {
-        await DistributedEventBus.Subscribe(nameof(HasFybctuib), (data) =>
+        await DistributedEventBus.Subscribe("HasFybctuib", async (data) =>
         {
             var result = data as bool?;
             if (result != null)
             {
                 HasFybctuib = (bool)result;
+                StateHasChanged();
+                await StringDstributedEventBus.PublishAsync(nameof(Storages),"删除文件成功");
             }
         });
     }

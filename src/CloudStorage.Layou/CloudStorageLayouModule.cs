@@ -7,12 +7,12 @@ using Token.Module.Attributes;
 namespace CloudStorage.Layou;
 
 [DependOn(
+    typeof(TokenEventBusModule),
     typeof(CloudStorageApplicationsModule))]
 public class CloudStorageLayouModule : TokenModule
 {
     public override void ConfigureServices(IServiceCollection services)
     {
-        services.AddEventBus();
         services.AddMasaBlazor();
     }
 }

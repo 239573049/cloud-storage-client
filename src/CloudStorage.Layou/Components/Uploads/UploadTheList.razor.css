@@ -1,0 +1,11 @@
+﻿.upload-list {
+    transition: .3s;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.upload-list:hover{
+    transition:.3s;
+    background-color:aqua;
+}

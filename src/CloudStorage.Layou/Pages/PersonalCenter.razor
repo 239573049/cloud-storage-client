@@ -6,57 +6,57 @@
             <MImage MaxHeight="150"
                     MaxWidth="150"
                     Style=" border-radius: 18px;"
-                    Src="https://ts1.cn.mm.bing.net/th?id=OIP-C.IbgYcbCHfUUtfweGMKAjTwAAAA&w=250&h=250&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2">
+                    Src="@UserInfo.HeadPortraits">
             </MImage>
         </div>
         <div class="user-info">
-            用户昵称
+            @(UserInfo != null ? UserInfo?.Name : "")
         </div>
     </div>
 
     <div class="user-lime">
-        <MProgressLinear Height="15" Value="15" Color="lime" Style="border-radius:18px;">可用空间440MB/100GB</MProgressLinear>
-    </div>
+        <MProgressLinear Height="15" Value="@(UserInfo?.Percentage??0)" Color="lime" Style="border-radius:18px;">已使用@(CommonHelper.GetFileSize(UserInfo?.UsedSize))/@(CommonHelper.GetFileSize(UserInfo?.TotalSize))</MProgressLinear>
+        </div>
 
-    <div class="settings">
+        <div class="settings">
 
-        <MList Style="border-radius: 12px;"
-                Dense
+            <MList Style="border-radius: 12px;"
+               Dense
                Nav>
-
-            <MListItem Link>
-                <MListItemIcon>
-                    <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/update.png" Dark></MImage>
-                </MListItemIcon>
-
-                <MListItemContent>
-                    <MListItemTitle>编辑个人资料</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-            <MDivider></MDivider>
 
                 <MListItem Link>
                     <MListItemIcon>
-                    <MImage Src= "https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/setting.png" Dark></MImage>
+                        <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/update.png" Dark></MImage>
                     </MListItemIcon>
 
                     <MListItemContent>
-                    <MListItemTitle>设置</MListItemTitle>
+                        <MListItemTitle>编辑个人资料</MListItemTitle>
                     </MListItemContent>
                 </MListItem>
-                <MDivider ></MDivider>
+                <MDivider></MDivider>
+
+                <MListItem Link>
+                    <MListItemIcon>
+                        <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/setting.png" Dark></MImage>
+                    </MListItemIcon>
+
+                    <MListItemContent>
+                        <MListItemTitle>设置</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+                <MDivider></MDivider>
 
 
-            <MListItem Link OnClick="OnLogoutClick">
-                <MListItemIcon>
-                    <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/logout.png" Dark></MImage>
-                </MListItemIcon>
+                <MListItem Link OnClick="OnLogoutClick">
+                    <MListItemIcon>
+                        <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/logout.png" Dark></MImage>
+                    </MListItemIcon>
 
-                <MListItemContent>
-                    <MListItemTitle>退出登录</MListItemTitle>
-                </MListItemContent>
-            </MListItem>
-            <MDivider></MDivider>
-        </MList>
+                    <MListItemContent>
+                        <MListItemTitle>退出登录</MListItemTitle>
+                    </MListItemContent>
+                </MListItem>
+                <MDivider></MDivider>
+            </MList>
+        </div>
     </div>
-</div>
