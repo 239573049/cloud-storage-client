@@ -15,15 +15,14 @@ namespace CloudStorage.Layou.Components.Uploads
         [Inject]
         public IKeyLocalEventBus<Tuple<long, Guid>> UploadTheListEventBus { get; set; }
 
-        public static List<UploadingDto> UploadingList { get; set; }
+        public static BlockingCollection<UploadingDto> UploadingList { get; set; }
 
         protected override async void OnInitialized()
         {
 
-            UploadingList.AddRange(UploadingEventBus.UploadingList);
+            UploadingList = UploadingEventBus.UploadingList;
 
-            UploadingList = UploadingList.DistinctBy(x => x.Id).ToList();
-            
+
             await UploadTheListEventBus.Subscribe(KeyLoadNames.UploadingListName, a =>
             {
                 foreach (var d in UploadingList)

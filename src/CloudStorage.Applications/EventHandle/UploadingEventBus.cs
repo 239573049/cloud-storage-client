@@ -61,8 +61,9 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         foreach (var item in eventData)
         {
             int length = (int)(item.Length / size);
-            var channel = Channel.CreateBounded<byte[]>(length);
+            var channel = Channel.CreateBounded<byte[]>(length+1);
 
+            // 建立传输通道
             await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
             {
                 StorageId = item.StorageId,
@@ -71,17 +72,19 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
             }));
 
             var bytesTransferred = 0;
-            for (int k = 0; k < length; k++)
+
+            // 定义下载缓存
+            var b = new byte[size];
+            int len;
+            while ((len = await item.Stream.ReadAsync(b)) != 0)
             {
-                var b = new byte[size];
-                await item.Stream.ReadAsync(b);
+
                 await channel.Writer.WriteAsync(b);
-                bytesTransferred += b.Length;
-                if (k != 0)
-                {
-                    await UploadingSizeEvent(item.Id, bytesTransferred);
-                }
+                bytesTransferred += len;
+                await UploadingSizeEvent(item.Id, bytesTransferred);
             }
+            
+            // 传输完成结束通道
             channel.Writer.Complete();
         }
     }

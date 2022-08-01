@@ -39,7 +39,7 @@ public class UploadingDto
                 return 0;
             }
 
-            return (int)((UploadingSize / Length) * 100);
+            return (int)((decimal)UploadingSize / (decimal)Length * 100m);
         }
     }
 }
