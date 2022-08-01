@@ -34,7 +34,7 @@ public class UploadingDto
     {
         get
         {
-            if (UploadingSize == 0 && Length == 0)
+            if (UploadingSize == 0 || Length == 0)
             {
                 return 0;
             }

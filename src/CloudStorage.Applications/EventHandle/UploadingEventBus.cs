@@ -2,14 +2,9 @@
 using CloudStoage.Domain.Etos;
 using CloudStorage.Applications.Helpers;
 using CloudStorage.Domain.Shared;
-using MessagePack;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Maui.Storage;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Concurrent;
-using System.Net.Http.Handlers;
 using System.Threading.Channels;
 using Token.EventBus;
 using Token.EventBus.Handlers;
@@ -21,7 +16,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 {
     public BlockingCollection<UploadingDto> UploadingList { get; set; } = new BlockingCollection<UploadingDto>();
 
-    private readonly IKeyLocalEventBus<bool> KeyLocalEventBus;
+    private readonly IKeyLocalEventBus<Tuple<long, Guid>> KeyLocalEventBus;
 
     private readonly TokenManage token;
 
@@ -29,7 +24,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 
     private HubConnection connection;
 
-    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<bool> keyLocalEventBus, TokenManage token)
+    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<Tuple<long, Guid>> keyLocalEventBus, TokenManage token)
     {
         _htttpClientHelper = htttpClientHelper;
         KeyLocalEventBus = keyLocalEventBus;
@@ -98,7 +93,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
             if (d.Id == id)
             {
                 d.UploadingSize = BytesTransferred;
-                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, true);
+                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, new Tuple<long, Guid>(BytesTransferred, id));
                 return;
             }
         }

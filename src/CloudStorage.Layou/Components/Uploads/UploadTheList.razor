@@ -4,8 +4,8 @@
         <MCard Class="upload-list">
             <div>@d.FileName</div>
             <MContainer>
-                <MProgressLinear Value="@d.Progress" Height="25" >
-                    <strong>@($"{context}%")</strong>
+                <MProgressLinear Value="@(d.UploadingSize/d.Length)" Height="25">
+                    <strong>@($"{(d.UploadingSize / d.Length*100)}")</strong>
                 </MProgressLinear>
             </MContainer>
         </MCard>
