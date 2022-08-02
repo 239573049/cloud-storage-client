@@ -23,6 +23,7 @@ partial class Storages
     /// 当前点击的文件id
     /// </summary>
     public Guid? ClickStorageId { get; set; }
+
     public GetStorageListInput GetStorageListInput { get; set; } = new GetStorageListInput();
 
     /// <summary>
@@ -34,28 +35,14 @@ partial class Storages
     public IKeyLocalEventBus<string> DistributedEventBus { get; set; }
 
     [Inject]
-    public ILocalEventBus LocalEventBus { get; set; }
-
-    [Inject]
-    public IPopupService PopupService { get; set; }
-
-    /// <summary>
-    /// js工具
-    /// </summary>
-    [Inject]
-    public JsHelper jsHelper { get; set; }
-
-    [Inject]
     public StorageApi StorageApi { get; set; }
 
     [Inject]
-    public HtttpClientHelper HtttpClientHelper { get; set; }
-
-    public const string inputFileId = "inputfile";
+    public CommonHelper CommonHelper { get; set; }
 
     private async Task ClickInputFileAsync()
     {
-        await jsHelper.ClickInputFileAsync(inputFileId);
+        await CommonHelper.PickAndShow(GetStorageListInput.StorageId);
     }
 
     private async Task OnFunctionClickAsync(StorageDto dto)
@@ -116,26 +103,6 @@ partial class Storages
         var id = await StorageApi.GoBackAsync(GetStorageListInput.StorageId);
         GetStorageListInput.StorageId = id;
         await GetStorageListAsync();
-    }
-
-    private async Task UploadFilesAsync(InputFileChangeEventArgs eventArgs)
-    {
-        var files = eventArgs.GetMultipleFiles(10);
-        if (files.Count > 0)
-        {
-            await PopupService.ToastAsync("上传文件", BlazorComponent.AlertTypes.Info);
-            var uploadings = files.Select(x => new UploadingEto
-            {
-                Id = Guid.NewGuid(),
-                FileName = x.Name,
-                Length = x.Size,
-                StorageId= GetStorageListInput.StorageId,
-                Stream = x.OpenReadStream(x.Size)
-            }).ToList();
-
-            await LocalEventBus.PublishAsync(uploadings,false);
-            StateHasChanged();
-        }
     }
 
 }

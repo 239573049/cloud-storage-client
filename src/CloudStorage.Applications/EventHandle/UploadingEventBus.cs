@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Threading.Channels;
 using Token.EventBus;
 using Token.EventBus.Handlers;
@@ -62,35 +63,49 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         int size = (1024 * 10);
         foreach (var item in eventData)
         {
-            int length = (int)(item.Length / size);
-            var channel = Channel.CreateBounded<byte[]>(length + 1);
-
-            // 建立传输通道
-            await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
+            FileStream fileStream = null;
+            try
             {
-                item.StorageId,
-                item.FileName,
-                item.Length
-            }));
+                fileStream = File.OpenRead(item.FilePath);
 
-            var bytesTransferred = 0;
+                item.Length = fileStream.Length;
 
-            // 定义下载缓存
-            var b = new byte[size > item.Length ? item.Length ?? 0 : size];
-            int len;
-            while ((len = await item.Stream.ReadAsync(b)) != 0)
-            {
+                int length = (int)(item.Length / size);
+                var channel = Channel.CreateBounded<byte[]>(length + 1);
 
-                await channel.Writer.WriteAsync(b);
-                bytesTransferred += len;
-                await UploadingSizeEvent(item.Id, bytesTransferred);
+                // 建立传输通道
+                await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
+                {
+                    item.StorageId,
+                    item.FileName,
+                    item.Length
+                }));
+
+                var bytesTransferred = 0;
+
+                // 定义下载缓存
+                var b = new byte[size > item.Length ? item.Length ?? 0 : size];
+                int len;
+                var sw = Stopwatch.StartNew();
+                while ((len = await fileStream.ReadAsync(b)) != 0)
+                {
+
+                    await channel.Writer.WriteAsync(b);
+                    bytesTransferred += len;
+                    await UploadingSizeEvent(item.Id, bytesTransferred);
+                }
+                sw.Stop();
+
+                // 传输完成结束通道
+                channel.Writer.Complete();
+                await DistributedEventBus.PublishAsync("Storages", "上传文件成功");
+
+                await UploadingSizeEvent(item.Id, succeed: true);
             }
-
-            // 传输完成结束通道
-            channel.Writer.Complete();
-            await DistributedEventBus.PublishAsync("Storages", "上传文件成功");
-
-            await UploadingSizeEvent(item.Id, succeed: true);
+            finally
+            {
+                fileStream?.Close();
+            }
         }
     }
 
