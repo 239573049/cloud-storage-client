@@ -72,11 +72,9 @@ public class StorageApi : IScopedDependency
 
         var message = await httpclient.GetAsync(Name + $"/storage-list?Page={input.Page}&PageSize={input.PageSize}&StorageId={input.StorageId}&Keywords={input.Keywords}");
 
-        var result = await message.Content.ReadFromJsonAsync<ModelStateResult<PagedResultDto<StorageDto>>>();
+        var data = JsonConvert.DeserializeObject<ModelStateResult<PagedResultDto<StorageDto>>>(await message.Content.ReadAsStringAsync());
 
-        //var data = JsonConvert.DeserializeObject<ModelStateResult<PagedResultDto<StorageDto>>>(result);
-
-        return result.Data;
+        return data.Data;
     }
 
     /// <summary>
@@ -88,9 +86,8 @@ public class StorageApi : IScopedDependency
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
         var message = await httpclient.GetAsync(Name + "/newest-file");
-        var result = await message.Content.ReadAsStringAsync();
 
-        return JsonConvert.DeserializeObject<ModelStateResult<GetNewestStorageDto>>(result);
+        return JsonConvert.DeserializeObject<ModelStateResult<GetNewestStorageDto>>(await message.Content.ReadAsStringAsync());
     }
 
     /// <summary>
@@ -119,9 +116,7 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message = await httpclient.GetStringAsync(Name + "/storage/" + id);
-
-        var data = JsonConvert.DeserializeObject<ModelStateResult<StorageDto>>(message);
+        var data = JsonConvert.DeserializeObject<ModelStateResult<StorageDto>>(await httpclient.GetStringAsync(Name + "/storage/" + id));
 
         return data.Data;
     }
@@ -135,9 +130,7 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message = await httpclient.GetStringAsync(Name + "/go-back?id=" + Id);
-
-        var data = JsonConvert.DeserializeObject<ModelStateResult<Guid?>>(message);
+        var data = JsonConvert.DeserializeObject<ModelStateResult<Guid?>>(await httpclient.GetStringAsync(Name + "/go-back?id=" + Id));
 
         return data.Data;
     }
