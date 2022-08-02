@@ -27,13 +27,13 @@ public class AuthenticationApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message =await httpclient.PostAsJsonAsync(Name + "/login", input);
+        var message = await httpclient.PostAsJsonAsync(Name + "/login", input);
 
-        if (message.IsSuccessStatusCode)
+        if(message.IsSuccessStatusCode)
         {
-            var data =await message.Content.ReadFromJsonAsync<ModelStateResult<string>>();
+            var data = await message.Content.ReadFromJsonAsync<ModelStateResult<string>>();
 
-            if (data.Code == Constant.SuccessStatusCode)
+            if(data.Code == Constant.SuccessStatusCode)
             {
                 return data.Data;
             }

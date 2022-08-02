@@ -53,4 +53,10 @@
       <ProjectReference Include="..\CloudStorage.Layou\CloudStorage.Layou.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="wwwroot\appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
