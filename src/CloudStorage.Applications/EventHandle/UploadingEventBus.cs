@@ -2,14 +2,11 @@
 using CloudStoage.Domain.Etos;
 using CloudStorage.Applications.Helpers;
 using CloudStorage.Domain.Shared;
-using MessagePack;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Maui.Storage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Concurrent;
-using System.Net.Http.Handlers;
 using System.Threading.Channels;
 using Token.EventBus;
 using Token.EventBus.Handlers;
@@ -21,19 +18,19 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 {
     public BlockingCollection<UploadingDto> UploadingList { get; set; } = new BlockingCollection<UploadingDto>();
 
-    private readonly IKeyLocalEventBus<bool> KeyLocalEventBus;
-
+    private readonly IKeyLocalEventBus<UploadingDto> KeyLocalEventBus;
+    private readonly IKeyLocalEventBus<string> DistributedEventBus;
+    private readonly IConfiguration _configuration;
     private readonly TokenManage token;
-
-    private readonly HtttpClientHelper _htttpClientHelper;
 
     private HubConnection connection;
 
-    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<bool> keyLocalEventBus, TokenManage token)
+    public UploadingEventBus(IKeyLocalEventBus<UploadingDto> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus, IConfiguration configuration)
     {
-        _htttpClientHelper = htttpClientHelper;
         KeyLocalEventBus = keyLocalEventBus;
         this.token = token;
+        DistributedEventBus = distributedEventBus;
+        _configuration = configuration;
     }
 
     public async Task HandleEventAsync(List<UploadingEto> eventData)
@@ -41,7 +38,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         if (connection == null || connection.State != HubConnectionState.Connected)
         {
             connection = new HubConnectionBuilder()
-                .WithUrl(Constant.Api + "/file-stream", option =>
+                .WithUrl(_configuration["HostApi"] + "/file-stream", option =>
                 {
                     option.AccessTokenProvider = () => Task.FromResult(token.Token);
                 })
@@ -66,39 +63,51 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         foreach (var item in eventData)
         {
             int length = (int)(item.Length / size);
-            var channel = Channel.CreateBounded<byte[]>(length);
+            var channel = Channel.CreateBounded<byte[]>(length + 1);
 
+            // 建立传输通道
             await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
             {
-                StorageId = item.StorageId,
-                FileName = item.FileName,
-                Length = item.Length
+                item.StorageId,
+                item.FileName,
+                item.Length
             }));
 
             var bytesTransferred = 0;
-            for (int k = 0; k < length; k++)
+
+            // 定义下载缓存
+            var b = new byte[size > item.Length ? item.Length ?? 0 : size];
+            int len;
+            while ((len = await item.Stream.ReadAsync(b)) != 0)
             {
-                var b = new byte[size];
-                await item.Stream.ReadAsync(b);
+
                 await channel.Writer.WriteAsync(b);
-                bytesTransferred += b.Length;
-                if (k != 0)
-                {
-                    await UploadingSizeEvent(item.Id, bytesTransferred);
-                }
+                bytesTransferred += len;
+                await UploadingSizeEvent(item.Id, bytesTransferred);
             }
+
+            // 传输完成结束通道
             channel.Writer.Complete();
+            await DistributedEventBus.PublishAsync("Storages", "上传文件成功");
+
+            await UploadingSizeEvent(item.Id, succeed: true);
         }
     }
 
-    private async Task UploadingSizeEvent(Guid id, int BytesTransferred)
+    private async Task UploadingSizeEvent(Guid id, int BytesTransferred = 0, bool succeed = false)
     {
         foreach (var d in UploadingList)
         {
             if (d.Id == id)
             {
+                if (succeed)
+                {
+                    d.Stats = UpdateStats.Succeed;
+                    await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, d);
+                    return;
+                }
                 d.UploadingSize = BytesTransferred;
-                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, true);
+                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, d);
                 return;
             }
         }

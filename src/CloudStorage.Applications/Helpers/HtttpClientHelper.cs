@@ -30,7 +30,7 @@ public class HtttpClientHelper : IScopedDependency
         httpClient.DefaultRequestHeaders
             .Add(Constant.Authorization, http.DefaultRequestHeaders.FirstOrDefault(x => x.Key == Constant.Authorization).Value);
         httpClient.DefaultRequestHeaders.Add("id", files.Id.ToString());
-
+        
         using var multipartFormData = new MultipartFormDataContent
         {
             { new StreamContent(files.Stream), "file", files.FileName }

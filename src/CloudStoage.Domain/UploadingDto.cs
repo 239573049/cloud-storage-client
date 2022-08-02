@@ -34,12 +34,12 @@ public class UploadingDto
     {
         get
         {
-            if (UploadingSize == 0 && Length == 0)
+            if (UploadingSize == 0 || Length == 0)
             {
                 return 0;
             }
 
-            return (int)((UploadingSize / Length) * 100);
+            return (int)((decimal)UploadingSize / (decimal)Length * 100m);
         }
     }
 }

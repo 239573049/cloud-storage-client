@@ -2,6 +2,7 @@
 using CloudStorage.Applications.EventHandle;
 using CloudStorage.Domain.Shared;
 using System.Collections.Concurrent;
+using System.Drawing;
 using Token.EventBus;
 
 namespace CloudStorage.Layou.Components.Uploads
@@ -12,16 +13,28 @@ namespace CloudStorage.Layou.Components.Uploads
         public UploadingEventBus UploadingEventBus { get; set; }
 
         [Inject]
-        public IKeyLocalEventBus<bool> UploadTheListEventBus { get; set; }
+        public IKeyLocalEventBus<UploadingDto> UploadTheListEventBus { get; set; }
 
-        public BlockingCollection<UploadingDto> UploadingList { get; set; } = new BlockingCollection<UploadingDto>();
+        public static BlockingCollection<UploadingDto> UploadingList { get; set; }
 
         protected override async void OnInitialized()
         {
+
+            UploadingList = UploadingEventBus.UploadingList;
+
             await UploadTheListEventBus.Subscribe(KeyLoadNames.UploadingListName, a =>
             {
-                UploadingList = UploadingEventBus.UploadingList;
-                InvokeAsync(() => StateHasChanged());
+                foreach (var d in UploadingList)
+                {
+                    if (d.Id == a.Id)
+                    {
+                        d.Stats = a.Stats;
+                        d.UploadingSize = a.UploadingSize;
+                        StateHasChanged();
+                        return;
+                    }
+                }
+
             });
 
         }

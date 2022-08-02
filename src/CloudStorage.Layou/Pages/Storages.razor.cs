@@ -129,6 +129,7 @@ partial class Storages
                 Id = Guid.NewGuid(),
                 FileName = x.Name,
                 Length = x.Size,
+                StorageId= GetStorageListInput.StorageId,
                 Stream = x.OpenReadStream(x.Size)
             }).ToList();
 
