@@ -62,7 +62,7 @@ public class StorageDto
     {
         get
         {
-            if (Preview)
+            if(Preview)
             {
                 return cloudUrl;
             }

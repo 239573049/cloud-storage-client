@@ -30,7 +30,7 @@ public class StorageApi : IScopedDependency
 
         var message = await httpclient.PostAsync(Name + "/upload-file?storageId=" + storageId, formData);
 
-        if (message.IsSuccessStatusCode)
+        if(message.IsSuccessStatusCode)
         {
             return;
         }
@@ -45,7 +45,7 @@ public class StorageApi : IScopedDependency
     public async Task UploadFileListAsync(IReadOnlyList<IBrowserFile> files, Guid? storageId = null)
     {
         var formData = new MultipartFormDataContent();
-        foreach (var d in files)
+        foreach(var d in files)
         {
             formData.Add(new StreamContent(d.OpenReadStream(d.Size)), "files", d.Name);
         }
@@ -54,7 +54,7 @@ public class StorageApi : IScopedDependency
 
         var message = await httpclient.PostAsync(Name + "/upload-file-list?storageId=" + storageId, formData);
 
-        if (message.IsSuccessStatusCode)
+        if(message.IsSuccessStatusCode)
         {
             return;
         }
@@ -70,13 +70,13 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message =await  httpclient.GetAsync(Name + $"/storage-list?Page={input.Page}&PageSize={input.PageSize}&StorageId={input.StorageId}&Keywords={input.Keywords}");
+        var message = await httpclient.GetAsync(Name + $"/storage-list?Page={input.Page}&PageSize={input.PageSize}&StorageId={input.StorageId}&Keywords={input.Keywords}");
 
-        var result = await message.Content.ReadAsStringAsync();
+        var result = await message.Content.ReadFromJsonAsync<ModelStateResult<PagedResultDto<StorageDto>>>();
 
-        var data =  JsonConvert.DeserializeObject<ModelStateResult<PagedResultDto<StorageDto>>>(result);
+        //var data = JsonConvert.DeserializeObject<ModelStateResult<PagedResultDto<StorageDto>>>(result);
 
-        return data.Data;
+        return result.Data;
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message = await httpclient.GetAsync(Name+"/newest-file");
+        var message = await httpclient.GetAsync(Name + "/newest-file");
         var result = await message.Content.ReadAsStringAsync();
 
         return JsonConvert.DeserializeObject<ModelStateResult<GetNewestStorageDto>>(result);
@@ -104,7 +104,7 @@ public class StorageApi : IScopedDependency
 
         var message = await httpclient.PostAsJsonAsync(Name + "/directory", input);
 
-        if (message.IsSuccessStatusCode)
+        if(message.IsSuccessStatusCode)
         {
             return;
         }
@@ -119,7 +119,7 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message = await httpclient.GetStringAsync(Name + "/storage/"+id);
+        var message = await httpclient.GetStringAsync(Name + "/storage/" + id);
 
         var data = JsonConvert.DeserializeObject<ModelStateResult<StorageDto>>(message);
 
@@ -135,7 +135,7 @@ public class StorageApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var message = await httpclient.GetStringAsync(Name + "/go-back?id="+ Id);
+        var message = await httpclient.GetStringAsync(Name + "/go-back?id=" + Id);
 
         var data = JsonConvert.DeserializeObject<ModelStateResult<Guid?>>(message);
 
@@ -153,7 +153,7 @@ public class StorageApi : IScopedDependency
 
         var message = await httpclient.DeleteAsync(Name + "/storage/" + id);
 
-        if (message.IsSuccessStatusCode)
+        if(message.IsSuccessStatusCode)
         {
             return;
         }

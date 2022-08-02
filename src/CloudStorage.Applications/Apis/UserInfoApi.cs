@@ -24,7 +24,7 @@ public class UserInfoApi : IScopedDependency
     {
         var httpclient = httpClientFactory.CreateClient(string.Empty);
 
-        var data =await httpclient.GetStringAsync(Name);
+        var data = await httpclient.GetStringAsync(Name);
 
         var result = JsonConvert.DeserializeObject<ModelStateResult<UserInfoDto>>(data);
 

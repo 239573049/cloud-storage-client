@@ -4,11 +4,7 @@ public class Constant
 {
     public const string Token = "token";
 
-#if DEBUG
-    public const string Api = "https://localhost:8081";
-#else
-    public const string Api = "https://tokenhu.top";
-#endif
+    public const string Api = "https://tokenhu.top/cloud-storage";
 
     public const string DateTimeStr = "yyyy-MM-dd HH-mm-ss";
 

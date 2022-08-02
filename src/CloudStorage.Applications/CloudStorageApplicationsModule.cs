@@ -18,8 +18,11 @@ public class CloudStorageApplicationsModule : TokenModule
             {
                 var status = services.GetService<StatsManage>();
                 var token = services.GetRequiredService<TokenManage>();
+
                 x.DefaultRequestHeaders.Add(Constant.Authorization, $"Bearer " + token.Token);
-                x.BaseAddress = new Uri(Constant.Api);
+
+                // 如果是nginx代理了路由最后要加/不然无法找到路径
+                x.BaseAddress = new Uri(Constant.Api.EndsWith("/") ? Constant.Api : Constant.Api + "/");
 
             })
             .ConfigureHttpMessageHandlerBuilder(builder =>
