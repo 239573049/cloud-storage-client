@@ -13,7 +13,7 @@ namespace CloudStorage.Layou.Components.Uploads
         public UploadingEventBus UploadingEventBus { get; set; }
 
         [Inject]
-        public IKeyLocalEventBus<Tuple<long, Guid>> UploadTheListEventBus { get; set; }
+        public IKeyLocalEventBus<UploadingDto> UploadTheListEventBus { get; set; }
 
         public static BlockingCollection<UploadingDto> UploadingList { get; set; }
 
@@ -27,9 +27,10 @@ namespace CloudStorage.Layou.Components.Uploads
             {
                 foreach (var d in UploadingList)
                 {
-                    if (d.Id == a.Item2)
+                    if (d.Id == a.Id)
                     {
-                        d.UploadingSize = a.Item1;
+                        d.Stats = a.Stats;
+                        d.UploadingSize = a.UploadingSize;
                         StateHasChanged();
                         return;
                     }

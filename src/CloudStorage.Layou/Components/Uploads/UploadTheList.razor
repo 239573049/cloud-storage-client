@@ -3,11 +3,34 @@
     {
         <MCard Class="upload-list">
             <div>@d.FileName</div>
-            <MContainer>
-                <MProgressLinear Value="@(d.Progress)" Height="25">
-                    <strong>@(d.Progress)%</strong>
-                </MProgressLinear>
-            </MContainer>
+            @if (d.Stats == UpdateStats.BeUploading)
+            {
+
+                <MContainer>
+                    <MProgressLinear Value="@(d.Progress)" Height="25">
+                        <strong>@(d.Progress)%</strong>
+                    </MProgressLinear>
+                </MContainer>
+            }
+            else if (d.Stats == UpdateStats.Failure)
+            {
+
+                <MContainer>
+                    上传失败
+                </MContainer>
+            }
+            else if (d.Stats == UpdateStats.Succeed)
+            {
+                <MContainer>
+                    上传完成
+                </MContainer>
+            }
+            else
+            {
+                <MContainer>
+                    未知状态
+                </MContainer>
+            }
         </MCard>
     }
 </div>

@@ -17,18 +17,15 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 {
     public BlockingCollection<UploadingDto> UploadingList { get; set; } = new BlockingCollection<UploadingDto>();
 
-    private readonly IKeyLocalEventBus<Tuple<long, Guid>> KeyLocalEventBus;
+    private readonly IKeyLocalEventBus<UploadingDto> KeyLocalEventBus;
     private readonly IKeyLocalEventBus<string> DistributedEventBus;
 
     private readonly TokenManage token;
 
-    private readonly HtttpClientHelper _htttpClientHelper;
-
     private HubConnection connection;
 
-    public UploadingEventBus(HtttpClientHelper htttpClientHelper, IKeyLocalEventBus<Tuple<long, Guid>> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus)
+    public UploadingEventBus(IKeyLocalEventBus<UploadingDto> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus)
     {
-        _htttpClientHelper = htttpClientHelper;
         KeyLocalEventBus = keyLocalEventBus;
         this.token = token;
         DistributedEventBus = distributedEventBus;
@@ -64,20 +61,20 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         foreach (var item in eventData)
         {
             int length = (int)(item.Length / size);
-            var channel = Channel.CreateBounded<byte[]>(length+1);
+            var channel = Channel.CreateBounded<byte[]>(length + 1);
 
             // 建立传输通道
             await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
             {
-                StorageId = item.StorageId,
-                FileName = item.FileName,
-                Length = item.Length
+                item.StorageId,
+                item.FileName,
+                item.Length
             }));
 
             var bytesTransferred = 0;
 
             // 定义下载缓存
-            var b = new byte[size];
+            var b = new byte[size > item.Length ? item.Length ?? 0 : size];
             int len;
             while ((len = await item.Stream.ReadAsync(b)) != 0)
             {
@@ -86,21 +83,29 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                 bytesTransferred += len;
                 await UploadingSizeEvent(item.Id, bytesTransferred);
             }
-            
+
             // 传输完成结束通道
             channel.Writer.Complete();
             await DistributedEventBus.PublishAsync("Storages", "上传文件成功");
+
+            await UploadingSizeEvent(item.Id, succeed: true);
         }
     }
 
-    private async Task UploadingSizeEvent(Guid id, int BytesTransferred)
+    private async Task UploadingSizeEvent(Guid id, int BytesTransferred = 0, bool succeed = false)
     {
         foreach (var d in UploadingList)
         {
             if (d.Id == id)
             {
+                if (succeed)
+                {
+                    d.Stats = UpdateStats.Succeed;
+                    await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, d);
+                    return;
+                }
                 d.UploadingSize = BytesTransferred;
-                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, new Tuple<long, Guid>(BytesTransferred, id));
+                await KeyLocalEventBus.PublishAsync(KeyLoadNames.UploadingListName, d);
                 return;
             }
         }

@@ -5,7 +5,6 @@ public class Constant
     public const string Token = "token";
 
     public const string Api = "https://tokenhu.top/cloud-storage";
-#endif
 
     public const string DateTimeStr = "yyyy-MM-dd HH-mm-ss";
 
