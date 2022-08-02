@@ -4,6 +4,7 @@ using CloudStorage.Applications.Helpers;
 using CloudStorage.Domain.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Threading.Channels;
@@ -19,16 +20,17 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
 
     private readonly IKeyLocalEventBus<UploadingDto> KeyLocalEventBus;
     private readonly IKeyLocalEventBus<string> DistributedEventBus;
-
+    private readonly IConfiguration _configuration;
     private readonly TokenManage token;
 
     private HubConnection connection;
 
-    public UploadingEventBus(IKeyLocalEventBus<UploadingDto> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus)
+    public UploadingEventBus(IKeyLocalEventBus<UploadingDto> keyLocalEventBus, TokenManage token, IKeyLocalEventBus<string> distributedEventBus, IConfiguration configuration)
     {
         KeyLocalEventBus = keyLocalEventBus;
         this.token = token;
         DistributedEventBus = distributedEventBus;
+        _configuration = configuration;
     }
 
     public async Task HandleEventAsync(List<UploadingEto> eventData)
@@ -36,7 +38,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
         if (connection == null || connection.State != HubConnectionState.Connected)
         {
             connection = new HubConnectionBuilder()
-                .WithUrl(Constant.Api + "/file-stream", option =>
+                .WithUrl(_configuration["HostApi"] + "/file-stream", option =>
                 {
                     option.AccessTokenProvider = () => Task.FromResult(token.Token);
                 })

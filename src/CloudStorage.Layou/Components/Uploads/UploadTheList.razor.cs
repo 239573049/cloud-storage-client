@@ -22,7 +22,6 @@ namespace CloudStorage.Layou.Components.Uploads
 
             UploadingList = UploadingEventBus.UploadingList;
 
-
             await UploadTheListEventBus.Subscribe(KeyLoadNames.UploadingListName, a =>
             {
                 foreach (var d in UploadingList)

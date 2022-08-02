@@ -31,6 +31,20 @@
                     未知状态
                 </MContainer>
             }
+            @if (d.Stats == UpdateStats.BeUploading || d.Stats == UpdateStats.Suspend)
+            {
+                <div>
+                    @if (d.Stats == UpdateStats.Suspend)
+                    {
+                        <MButton>暂停</MButton>
+                    }
+                    else
+                    {
+                        <MButton>继续</MButton>
+                    }
+                    <MButton>取消</MButton>
+                </div>
+            }
         </MCard>
     }
 </div>
