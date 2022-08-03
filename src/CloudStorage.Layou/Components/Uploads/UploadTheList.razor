@@ -7,8 +7,12 @@
             {
 
                 <MContainer>
+                    <div>
+                        <span>@(CommonHelper.GetFileSize(d.UploadingSize)+"/"+CommonHelper.GetFileSize(d.Length))</span>
+                        <span style="float: right;">@(CommonHelper.GetFileSize(d.Rate) + "/s")</span>
+                    </div>
                     <MProgressLinear Value="@(d.Progress)" Height="25">
-                        <strong>@(d.Progress)%</strong>
+                        <span>@(d.Progress)%</span>
                     </MProgressLinear>
                 </MContainer>
             }

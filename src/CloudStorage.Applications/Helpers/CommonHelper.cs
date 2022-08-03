@@ -29,13 +29,13 @@ public class CommonHelper : IScopedDependency
         if (size < num)
             return size + "B";
         if (size < Math.Pow(num, 2))
-            return ((long)size / num).ToString("f2") + "K"; //kb
+            return ((long)size / num).ToString("f2") + "KB"; //kb
         if (size < Math.Pow(num, 3))
-            return ((long)size / Math.Pow(num, 2)).ToString("f2") + "M"; //M
+            return ((long)size / Math.Pow(num, 2)).ToString("f2") + "MB"; //M
         if (size < Math.Pow(num, 4))
-            return ((long)size / Math.Pow(num, 3)).ToString("f2") + "G"; //G
+            return ((long)size / Math.Pow(num, 3)).ToString("f2") + "GB"; //G
 
-        return ((long)size / Math.Pow(num, 4)).ToString("f2") + "T"; //T
+        return ((long)size / Math.Pow(num, 4)).ToString("f2") + "TB"; //T
     }
 
     public async Task PickAndShow(Guid? storageId)
