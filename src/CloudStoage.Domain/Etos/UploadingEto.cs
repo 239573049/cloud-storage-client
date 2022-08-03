@@ -22,5 +22,5 @@ public class UploadingEto
     /// <summary>
     /// Stream
     /// </summary>
-    public Stream Stream { get; set; }
+    public string FilePath { get; set; }
 }

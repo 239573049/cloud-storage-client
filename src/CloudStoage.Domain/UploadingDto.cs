@@ -21,6 +21,10 @@ public class UploadingDto
     /// </summary>
     public long UploadingSize { get; set; } = 0;
 
+    /// <summary>
+    /// 上传速率（上一秒上传大小）
+    /// </summary>
+    public int Rate { get; set; }
 
     /// <summary>
     /// 上传状态
@@ -30,7 +34,7 @@ public class UploadingDto
     /// <summary>
     /// 上传进度
     /// </summary>
-    public int Progress
+    public double Progress
     {
         get
         {
@@ -39,7 +43,7 @@ public class UploadingDto
                 return 0;
             }
 
-            return (int)((decimal)UploadingSize / (decimal)Length * 100m);
+            return Math.Round((double)(UploadingSize / (decimal)Length) * 100,2);
         }
     }
 }

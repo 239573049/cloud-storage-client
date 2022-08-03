@@ -33,4 +33,8 @@
 	  <ProjectReference Include="..\CloudStoage.Domain\CloudStoage.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="EventHandle\" />
+	</ItemGroup>
+
 </Project>
