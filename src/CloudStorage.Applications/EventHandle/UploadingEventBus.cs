@@ -83,7 +83,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                 var channel = Channel.CreateBounded<byte[]>(length + 1);
 
                 // 建立传输通道
-                await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
+                await connection.SendAsync("FileStreamSave", channel.Reader, JsonConvert.SerializeObject(new
                 {
                     item.StorageId,
                     item.FileName,
@@ -107,7 +107,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                     await channel.Writer.WriteAsync(b);
                     await channel.Writer.WaitToWriteAsync();
                     bytesTransferred += len;
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         if (succee)
                         {

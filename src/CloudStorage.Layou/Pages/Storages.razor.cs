@@ -71,6 +71,10 @@ partial class Storages
                 DialogImagesShow = true;
                 DialogImagesSrc = dto.CloudUrl;
             }
+            else
+            {
+
+            }
         }
         else
         {
