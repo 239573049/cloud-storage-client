@@ -1,4 +1,5 @@
 ﻿@page "/Storages"
+@using CloudStorage.Layou.Components.Dialogs
 @using Microsoft.AspNetCore.Components.Forms
 
 <div>
@@ -40,8 +41,9 @@
 
     @foreach (var item in StorageList?.Items)
     {
-        <MCard Flat Class="list" @onclick="()=>OnFunctionClickAsync(item)">
+        <MCard Flat Class="list" >
             <MImage Style="border-radius: 18px;"
+                @onclick="async ()=>await GetStorageAsync(item)"
                 MaxHeight="85"
                 MaxWidth="70"
                 Height="85"
@@ -50,7 +52,7 @@
             <div style="max-height: 20px;text-overflow: ellipsis;overflow: hidden;">
                 @item.Path
             </div>
-            <div class="function"><p>···</p></div>
+            <div class="function" @onclick="()=>OnFunctionClickAsync(item)"><p>···</p></div>
         </MCard>
     }
 </div>
@@ -59,6 +61,7 @@
 
 </Storagefile>
 
+<DialogImages @bind-Show="DialogImagesShow" @bind-Src=DialogImagesSrc></DialogImages>
 
 <MOverlay Value="Load">
     <MProgressCircular indeterminate

@@ -107,7 +107,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                     await channel.Writer.WriteAsync(b);
                     await channel.Writer.WaitToWriteAsync();
                     bytesTransferred += len;
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 1; i++)
                     {
                         if (succee)
                         {

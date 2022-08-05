@@ -1,14 +1,8 @@
-using CloudStoage.Domain.Etos;
 using CloudStoage.Domain.HttpModule.Input;
 using CloudStoage.Domain.HttpModule.Result;
 using CloudStorage.Applications.Helpers;
-using CloudStorage.Layou.Helper;
-using Masa.Blazor;
-using Microsoft.AspNetCore.Components.Forms;
-using System.Diagnostics;
-using System.Net.Http.Handlers;
+using CloudStorage.Domain.Shared;
 using Token.EventBus;
-using Token.EventBus.EventBus;
 
 namespace CloudStorage.Layou.Pages;
 
@@ -18,6 +12,10 @@ partial class Storages
     private bool CreateFolder = false;
     private bool HasFybctuib;
     private bool Load = false;
+
+    public bool DialogImagesShow { get; set; } = false;
+
+    public string? DialogImagesSrc { get; set; }
 
     /// <summary>
     /// 当前点击的文件id
@@ -45,17 +43,40 @@ partial class Storages
         await CommonHelper.PickAndShow(GetStorageListInput.StorageId);
     }
 
+    /// <summary>
+    /// 功能按键点击事件
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     private async Task OnFunctionClickAsync(StorageDto dto)
     {
         ClickStorageId = dto.Id;
-        if (dto.Type == Domain.Shared.StorageType.File)
+        if (dto.Type == StorageType.File)
         {
             HasFybctuib = true;
         }
         else
         {
+            HasFybctuib = true;
+        }
+    }
+
+    private async Task GetStorageAsync(StorageDto dto)
+    {
+        ClickStorageId = dto.Id;
+        if (dto.Type == StorageType.File)
+        {
+            if (FileNameSuffix.Img.Any(x => dto.Path?.EndsWith(x) == true))
+            {
+                DialogImagesShow = true;
+                DialogImagesSrc = dto.CloudUrl;
+            }
+        }
+        else
+        {
             GetStorageListInput.StorageId = dto.Id;
             await GetStorageListAsync();
+
         }
     }
 
