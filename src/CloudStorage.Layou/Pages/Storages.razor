@@ -57,9 +57,7 @@
     }
 </div>
 
-<Storagefile HasFybctuib=HasFybctuib ValueChange="(value)=>HasFybctuib=value" StorageId="ClickStorageId">
-
-</Storagefile>
+<Storagefile @bind-HasFybctuib="HasFybctuib" StorageId="ClickStorageId" />
 
 <DialogImages @bind-Show="DialogImagesShow"  @bind-Src=DialogImagesSrc></DialogImages>
 
@@ -68,7 +66,7 @@
                        Size="64"></MProgressCircular>
 </MOverlay>
 
-<CreateFolder Dialog=CreateFolder OnChange="(value)=>CreateFolder=value" StorageId="GetStorageListInput.StorageId"></CreateFolder>
+<CreateFolder @bind-Dialog=CreateFolder StorageId="GetStorageListInput.StorageId"></CreateFolder>
 
 <style>
 

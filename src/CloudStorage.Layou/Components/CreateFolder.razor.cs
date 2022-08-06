@@ -5,26 +5,16 @@ namespace CloudStorage.Layou.Components;
 
 partial class CreateFolder
 {
-    private bool dialog;
-
     /// <summary>
     /// 是否显示
     /// </summary>
     [Parameter]
-    public bool Dialog
-    {
-        get { return dialog; }
-        set
-        {
-            OnChange?.Invoke(value);
-            dialog = value;
-        }
-    }
+    public bool Dialog { get; set; }
 
     public string? Name = string.Empty;
 
     [Parameter]
-    public Action<bool> OnChange { get; set; }
+    public EventCallback<bool> DialogChanged { get; set; }
 
     [Parameter]
     public Guid? StorageId { get; set; }
@@ -43,9 +33,9 @@ partial class CreateFolder
         await StorageApi.CreateDirectoryAsync(new CloudStoage.Domain.HttpModule.Input.CreateDirectoryInput
         {
             Path = Name,
-            StorageId=StorageId,
-        }) ;
+            StorageId = StorageId,
+        });
         Dialog = false;
-        await DistributedEventBus.PublishAsync(nameof(Storages),"创建文件夹成功");
+        await DistributedEventBus.PublishAsync(nameof(Storages), "创建文件夹成功");
     }
 }

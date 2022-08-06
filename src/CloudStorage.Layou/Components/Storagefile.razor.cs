@@ -7,21 +7,11 @@ namespace CloudStorage.Layou.Components;
 
 partial class Storagefile
 {
-    private bool hasFybctuib;
+    [Parameter]
+    public bool HasFybctuib { get; set; }
 
     [Parameter]
-    public bool HasFybctuib
-    {
-        get { return hasFybctuib; }
-        set
-        {
-            hasFybctuib = value;
-            ValueChange.InvokeAsync(value);
-        }
-    }
-
-    [Parameter]
-    public EventCallback<bool> ValueChange { get; set; }
+    public EventCallback<bool> HasFybctuibChanged { get; set; }
 
     /// <summary>
     /// 文件or文件夹id
@@ -57,9 +47,9 @@ partial class Storagefile
         }
         HasFybctuib = hasFybctuib;
 
-        parameters.TryGetValue(nameof(ValueChange), out EventCallback<bool> valueChange);
+        parameters.TryGetValue(nameof(HasFybctuibChanged), out EventCallback<bool> valueChange);
 
-        ValueChange = valueChange;
+        HasFybctuibChanged = valueChange;
 
         await GetStorageAsync(storageId);
 
@@ -75,9 +65,9 @@ partial class Storagefile
             var result = data as bool?;
             if (result != null)
             {
-                HasFybctuib = (bool)result;
+                await HasFybctuibChanged.InvokeAsync(result ?? false);
                 StateHasChanged();
-                await StringDstributedEventBus.PublishAsync(nameof(Storages),"删除文件成功");
+                await StringDstributedEventBus.PublishAsync(nameof(Storages), "删除文件成功");
             }
         });
     }

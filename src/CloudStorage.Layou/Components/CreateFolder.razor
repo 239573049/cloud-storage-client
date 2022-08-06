@@ -1,5 +1,6 @@
 ﻿
-<MDialog @bind-Value="Dialog"
+<MDialog Value=Dialog
+         ValueChanged=DialogChanged
          Persistent
          MaxWidth="600">
     <ChildContent>
@@ -18,7 +19,7 @@
                 <MSpacer></MSpacer>
                 <MButton Color="blue darken-1"
                          Text
-                         OnClick="() => Dialog = false">
+                         OnClick="() => DialogChanged.InvokeAsync(false)">
                     取消
                 </MButton>
                 <MButton Color="blue darken-1"
