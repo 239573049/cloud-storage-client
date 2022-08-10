@@ -28,5 +28,6 @@ partial class PersonalCenter
     private async Task GetUserInfoAsync()
     {
          UserInfo = await UserInfoApi.GetAsync();
+        var p= UserInfo.Percentage;
     }
 }

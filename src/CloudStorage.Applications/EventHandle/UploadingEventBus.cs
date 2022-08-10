@@ -1,10 +1,7 @@
 ﻿using CloudStoage.Domain;
 using CloudStoage.Domain.Etos;
-using CloudStorage.Applications.Helpers;
 using CloudStorage.Domain.Shared;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
@@ -83,7 +80,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                 var channel = Channel.CreateBounded<byte[]>(length + 1);
 
                 // 建立传输通道
-                await connection.SendAsync("FileStreamSaveAsync", channel.Reader, JsonConvert.SerializeObject(new
+                await connection.SendAsync("FileStreamSave", channel.Reader, JsonConvert.SerializeObject(new
                 {
                     item.StorageId,
                     item.FileName,
@@ -107,7 +104,7 @@ public class UploadingEventBus : ILocalEventHandler<List<UploadingEto>>, ISingle
                     await channel.Writer.WriteAsync(b);
                     await channel.Writer.WaitToWriteAsync();
                     bytesTransferred += len;
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         if (succee)
                         {

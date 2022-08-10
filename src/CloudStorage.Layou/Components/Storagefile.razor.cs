@@ -7,27 +7,17 @@ namespace CloudStorage.Layou.Components;
 
 partial class Storagefile
 {
-    private bool hasFybctuib;
+    [Parameter]
+    public bool HasFybctuib { get; set; }
 
     [Parameter]
-    public bool HasFybctuib
-    {
-        get { return hasFybctuib; }
-        set
-        {
-            hasFybctuib = value;
-            ValueChange.InvokeAsync(value);
-        }
-    }
-
-    [Parameter]
-    public EventCallback<bool> ValueChange { get; set; }
+    public EventCallback<bool> HasFybctuibChanged { get; set; }
 
     /// <summary>
     /// 文件or文件夹id
     /// </summary>
     [Parameter]
-    public Guid? StorageId { get; set; }
+    public StorageDto Storage { get; set; }
 
     [Inject]
     public StorageApi StorageApi { get; set; }
@@ -38,16 +28,14 @@ partial class Storagefile
     [Inject]
     public IKeyLocalEventBus<string> StringDstributedEventBus { get; set; }
 
-    /// <summary>
-    /// 信息
-    /// </summary>
-    public StorageDto Storageo { get; set; }
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.TryGetValue(nameof(StorageId), out Guid? storageId);
-        if (storageId == null)
+        parameters.TryGetValue("Storage", out StorageDto storage);
+        if (storage == null)
             return;
+
+        Storage = storage;
 
         parameters.TryGetValue(nameof(HasFybctuib), out bool hasFybctuib);
 
@@ -57,11 +45,10 @@ partial class Storagefile
         }
         HasFybctuib = hasFybctuib;
 
-        parameters.TryGetValue(nameof(ValueChange), out EventCallback<bool> valueChange);
+        parameters.TryGetValue(nameof(HasFybctuibChanged), out EventCallback<bool> valueChange);
 
-        ValueChange = valueChange;
+        HasFybctuibChanged = valueChange;
 
-        await GetStorageAsync(storageId);
 
         await HasFybctuibAsync();
 
@@ -75,21 +62,11 @@ partial class Storagefile
             var result = data as bool?;
             if (result != null)
             {
-                HasFybctuib = (bool)result;
+                await HasFybctuibChanged.InvokeAsync(result ?? false);
                 StateHasChanged();
-                await StringDstributedEventBus.PublishAsync(nameof(Storages),"删除文件成功");
+                await StringDstributedEventBus.PublishAsync(nameof(Storages), "删除文件成功");
             }
         });
     }
 
-    private async Task GetStorageAsync(Guid? id)
-    {
-        if (StorageId == id && Storageo != null)
-        {
-            return;
-        }
-        Storageo = await StorageApi.GetStorageAsync(id);
-
-        StorageId = id;
-    }
 }

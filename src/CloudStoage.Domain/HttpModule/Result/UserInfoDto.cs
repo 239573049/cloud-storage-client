@@ -70,11 +70,12 @@ public class UserInfoDto
     {
         get
         {
-            if(UsedSize!=0 && TotalSize != 0)
+            if (UsedSize == 0 || TotalSize == 0)
             {
-                return (int)((UsedSize / TotalSize) * 100);
+                return 0;
             }
-            return 0;
+            var percentage = (UsedSize / (decimal)TotalSize) *100;
+            return (int)percentage;
         }
     }
 }

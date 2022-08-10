@@ -12,16 +12,19 @@
         </MListItemContent>
     </MListItem>
     <MDivider></MDivider>
-    <MListItem Link>
-        <MListItemIcon>
-            <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/download.png" Dark></MImage>
-        </MListItemIcon>
+    @if(Storage.Type==StorageType.File)
+    {
+        <MListItem Link>
+            <MListItemIcon>
+                <MImage Src="https://token-cloud-storage.oss-cn-shenzhen.aliyuncs.com/icon/download.png" Dark></MImage>
+            </MListItemIcon>
 
-        <MListItemContent>
-            <MListItemTitle>下载文件</MListItemTitle>
-        </MListItemContent>
-    </MListItem>
-    <MDivider></MDivider>
+            <MListItemContent>
+                <MListItemTitle>下载文件</MListItemTitle>
+            </MListItemContent>
+        </MListItem>
+        <MDivider></MDivider>
+    }
 
     <MListItem Link>
         <MListItemIcon>

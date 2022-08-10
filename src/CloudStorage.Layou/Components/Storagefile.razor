@@ -1,25 +1,25 @@
 ﻿<div class="">
-    <MBottomSheet Inset Value=HasFybctuib ValueChanged="ValueChange" Style="height:auto;">
+    <MBottomSheet Inset Value=HasFybctuib ValueChanged="HasFybctuibChanged" Style="height:auto;">
         <ChildContent>
             <div class="info">
 
                 <div style="float: left;width:55px;">
-                    <MImage Src="@Storageo.CloudUrl"
+                    <MImage Src="@Storage.CloudUrl"
                             MaxHeight="@("55px")"
                             MaxWidth="@("55px")"
                         Class="grey darken-4"></MImage>
                 </div>
                 <div style="margin-left:10px">
                     <div>
-                        @Storageo.Path
+                        @Storage.Path
                     </div>
                     <div style="font-size:12px">
-                        @Storageo.CreationTime
+                        @Storage.CreationTime
                     </div>
                 </div>
                 <MDivider></MDivider>
 
-                <FileFunction StorageId="StorageId??Guid.Empty" />
+                <FileFunction Storage="Storage" />
             </div>
         </ChildContent>
     </MBottomSheet>
