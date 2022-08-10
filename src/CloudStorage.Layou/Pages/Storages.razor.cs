@@ -18,9 +18,9 @@ partial class Storages
     public string? DialogImagesSrc { get; set; }
 
     /// <summary>
-    /// 当前点击的文件id
+    /// 当前点击的文件
     /// </summary>
-    public Guid? ClickStorageId { get; set; }
+    public StorageDto ClickStorage { get; set; }
 
     public GetStorageListInput GetStorageListInput { get; set; } = new GetStorageListInput();
 
@@ -50,7 +50,7 @@ partial class Storages
     /// <returns></returns>
     private async Task OnFunctionClickAsync(StorageDto dto)
     {
-        ClickStorageId = dto.Id;
+        ClickStorage = dto;
         if (dto.Type == StorageType.File)
         {
             HasFybctuib = true;
@@ -63,7 +63,7 @@ partial class Storages
 
     private async Task GetStorageAsync(StorageDto dto)
     {
-        ClickStorageId = dto.Id;
+        ClickStorage = dto;
         if (dto.Type == StorageType.File)
         {
             if (FileNameSuffix.Img.Any(x => dto.Path?.EndsWith(x) == true))

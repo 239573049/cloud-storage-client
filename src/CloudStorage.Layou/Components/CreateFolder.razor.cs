@@ -35,7 +35,7 @@ partial class CreateFolder
             Path = Name,
             StorageId = StorageId,
         });
-        Dialog = false;
+        await DialogChanged.InvokeAsync(false);
         await DistributedEventBus.PublishAsync(nameof(Storages), "创建文件夹成功");
     }
 }

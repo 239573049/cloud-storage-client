@@ -1,4 +1,5 @@
 ﻿
+using CloudStoage.Domain.HttpModule.Result;
 using Token.EventBus;
 
 namespace CloudStorage.Layou.Components;
@@ -9,7 +10,7 @@ partial class FileFunction
     /// 文件Id
     /// </summary>
     [Parameter]
-    public Guid StorageId { get; set; }
+    public StorageDto Storage { get; set; }
 
     [Inject]
     public StorageApi StorageApi { get; set; }
@@ -19,7 +20,7 @@ partial class FileFunction
 
     private async void DeleteFileAsync()
     {
-        await StorageApi.DeleteStorageAsync(StorageId);
+        await StorageApi.DeleteStorageAsync(Storage.Id);
 
         await DistributedEventBus.PublishAsync("HasFybctuib", false);
     }

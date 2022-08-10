@@ -17,7 +17,7 @@ partial class Storagefile
     /// 文件or文件夹id
     /// </summary>
     [Parameter]
-    public Guid? StorageId { get; set; }
+    public StorageDto Storage { get; set; }
 
     [Inject]
     public StorageApi StorageApi { get; set; }
@@ -28,16 +28,14 @@ partial class Storagefile
     [Inject]
     public IKeyLocalEventBus<string> StringDstributedEventBus { get; set; }
 
-    /// <summary>
-    /// 信息
-    /// </summary>
-    public StorageDto Storageo { get; set; }
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
-        parameters.TryGetValue(nameof(StorageId), out Guid? storageId);
-        if (storageId == null)
+        parameters.TryGetValue("Storage", out StorageDto storage);
+        if (storage == null)
             return;
+
+        Storage = storage;
 
         parameters.TryGetValue(nameof(HasFybctuib), out bool hasFybctuib);
 
@@ -51,7 +49,6 @@ partial class Storagefile
 
         HasFybctuibChanged = valueChange;
 
-        await GetStorageAsync(storageId);
 
         await HasFybctuibAsync();
 
@@ -72,14 +69,4 @@ partial class Storagefile
         });
     }
 
-    private async Task GetStorageAsync(Guid? id)
-    {
-        if (StorageId == id && Storageo != null)
-        {
-            return;
-        }
-        Storageo = await StorageApi.GetStorageAsync(id);
-
-        StorageId = id;
-    }
 }
